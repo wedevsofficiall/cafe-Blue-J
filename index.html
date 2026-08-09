@@ -490,109 +490,8 @@
             line-height: 1.7;
             color: #4d5d62;
         }
-
-        /* ===== PROMO SLIDER ===== */
-        .slider-wrap {
-            position: relative;
-            overflow: hidden;
-            border-radius: 4px;
-            background: var(--teal-deep);
-        }
-        .slider-track {
-            display: flex;
-            transition: transform .8s var(--ease);
-        }
-        .slide {
-            min-width: 100%;
-            position: relative;
-            height: 460px;
-            display: flex;
-            align-items: flex-end;
-            background: var(--teal-deep);
-        }
-        .slide img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity .6s var(--ease);
-        }
-        .slide img.loaded {
-            opacity: 1;
-        }
-        .slide::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(0deg, rgba(0, 50, 56, .82) 0%, rgba(0, 50, 56, .1) 55%);
-        }
-        .slide-content {
-            position: relative;
-            z-index: 2;
-            padding: 48px;
-            color: var(--off-white);
-            max-width: 480px;
-        }
-        .slide-content .eyebrow {
+        .section-head .head-accent {
             color: var(--peach);
-        }
-        .slide-content h3 {
-            color: var(--off-white);
-            font-size: 32px;
-            margin: 10px 0 10px;
-        }
-        .slide-content p {
-            font-size: 15px;
-            color: rgba(255, 253, 252, .85);
-            margin-bottom: 20px;
-        }
-        .slider-arrows {
-            position: absolute;
-            bottom: 24px;
-            right: 32px;
-            display: flex;
-            gap: 10px;
-            z-index: 3;
-        }
-        .s-arrow {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 253, 252, .5);
-            color: var(--off-white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: .3s;
-            font-size: 20px;
-            background: rgba(0, 0, 0, .15);
-        }
-        .s-arrow:hover {
-            background: var(--peach);
-            border-color: var(--peach);
-        }
-        .slider-dots {
-            position: absolute;
-            bottom: 32px;
-            left: 48px;
-            display: flex;
-            gap: 8px;
-            z-index: 3;
-        }
-        .s-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 253, 252, .4);
-            transition: .3s;
-            cursor: pointer;
-        }
-        .s-dot.active {
-            background: var(--peach);
-            width: 22px;
-            border-radius: 5px;
         }
 
         /* ===== OFFERS ===== */
@@ -649,7 +548,12 @@
             line-height: 1.6;
             margin-bottom: 16px;
         }
-        .offer-link {
+        /* Fix for offer "Order Now" buttons — now scroll to menu */
+        button.offer-link {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -658,14 +562,142 @@
             text-transform: uppercase;
             letter-spacing: .06em;
             color: var(--teal);
+            font-family: var(--sans);
+            transition: color .3s var(--ease);
         }
-        .offer-link svg {
+        button.offer-link:hover {
+            color: var(--teal-deep);
+        }
+        button.offer-link svg {
             width: 12px;
             height: 12px;
             transition: transform .3s var(--ease);
         }
-        .offer-card:hover .offer-link svg {
+        .offer-card:hover button.offer-link svg {
             transform: translateX(5px);
+        }
+        .offers-cta-wrap {
+            text-align: center;
+            margin-top: 44px;
+        }
+
+        /* ===== PROMO SLIDER — FULL SCREEN ===== */
+        .slider-section {
+            padding: 0;
+            height: 100vh;
+            min-height: 640px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        .slider-wrap {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0;
+            background: var(--teal-deep);
+            width: 100%;
+            height: 100vh;
+            min-height: 640px;
+        }
+        .slider-track {
+            display: flex;
+            transition: transform .8s var(--ease);
+            height: 100%;
+        }
+        .slide {
+            min-width: 100%;
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            background: var(--teal-deep);
+        }
+        .slide img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity .6s var(--ease);
+        }
+        .slide img.loaded {
+            opacity: 1;
+        }
+        .slide::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(0, 50, 56, .82) 0%, rgba(0, 50, 56, .1) 55%);
+        }
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            padding: 48px;
+            color: var(--off-white);
+            max-width: 580px;
+            margin-bottom: 80px;
+        }
+        .slide-content .eyebrow {
+            color: var(--peach);
+        }
+        .slide-content h3 {
+            color: var(--off-white);
+            font-size: 42px;
+            margin: 10px 0 10px;
+        }
+        .slide-content p {
+            font-size: 17px;
+            color: rgba(255, 253, 252, .85);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        .slider-arrows {
+            position: absolute;
+            bottom: 40px;
+            right: 48px;
+            display: flex;
+            gap: 12px;
+            z-index: 3;
+        }
+        .s-arrow {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255, 253, 252, .5);
+            color: var(--off-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .3s;
+            font-size: 22px;
+            background: rgba(0, 0, 0, .2);
+            cursor: pointer;
+        }
+        .s-arrow:hover {
+            background: var(--peach);
+            border-color: var(--peach);
+        }
+        .slider-dots {
+            position: absolute;
+            bottom: 48px;
+            left: 48px;
+            display: flex;
+            gap: 10px;
+            z-index: 3;
+        }
+        .s-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 253, 252, .4);
+            transition: .3s;
+            cursor: pointer;
+        }
+        .s-dot.active {
+            background: var(--peach);
+            width: 28px;
+            border-radius: 6px;
         }
 
         /* ===== ABOUT ===== */
@@ -2032,6 +2064,29 @@
                 padding: 9px 16px;
                 font-size: 11px;
             }
+
+            /* Slider responsive */
+            .slide-content h3 {
+                font-size: 32px !important;
+            }
+            .slide-content {
+                padding: 32px !important;
+                max-width: 90% !important;
+                margin-bottom: 60px !important;
+            }
+            .slider-dots {
+                left: 32px !important;
+                bottom: 32px !important;
+            }
+            .slider-arrows {
+                right: 32px !important;
+                bottom: 32px !important;
+            }
+            .s-arrow {
+                width: 42px !important;
+                height: 42px !important;
+                font-size: 18px !important;
+            }
         }
 
         @media(max-width:640px) {
@@ -2058,10 +2113,14 @@
                 max-width: 100vw;
             }
             .slide-content {
-                padding: 28px;
+                padding: 20px !important;
+                margin-bottom: 50px !important;
             }
             .slide-content h3 {
-                font-size: 24px;
+                font-size: 26px !important;
+            }
+            .slide-content p {
+                font-size: 14px !important;
             }
             .modal-card {
                 padding: 28px 20px;
@@ -2071,6 +2130,26 @@
             }
             .hero p {
                 font-size: 16px;
+            }
+            .slider-dots {
+                left: 20px !important;
+                bottom: 20px !important;
+            }
+            .slider-arrows {
+                right: 20px !important;
+                bottom: 20px !important;
+            }
+            .s-arrow {
+                width: 36px !important;
+                height: 36px !important;
+                font-size: 16px !important;
+            }
+            .s-dot {
+                width: 8px !important;
+                height: 8px !important;
+            }
+            .s-dot.active {
+                width: 20px !important;
             }
 
             /* Logo responsive - mobile */
@@ -2154,6 +2233,38 @@
             .footer-logo .logo-text {
                 font-size: 17px;
             }
+            .slide-content h3 {
+                font-size: 22px !important;
+            }
+            .slide-content p {
+                font-size: 13px !important;
+            }
+            .slide-content {
+                padding: 16px !important;
+                margin-bottom: 40px !important;
+            }
+            .slider-arrows {
+                right: 16px !important;
+                bottom: 16px !important;
+                gap: 8px !important;
+            }
+            .s-arrow {
+                width: 32px !important;
+                height: 32px !important;
+                font-size: 14px !important;
+            }
+            .slider-dots {
+                left: 16px !important;
+                bottom: 16px !important;
+                gap: 6px !important;
+            }
+            .s-dot {
+                width: 6px !important;
+                height: 6px !important;
+            }
+            .s-dot.active {
+                width: 16px !important;
+            }
         }
 
         @media(max-width:360px) {
@@ -2183,15 +2294,15 @@
     <nav id="navbar">
         <div class="nav-inner">
             <a href="#home" class="nav-logo">
-                <!-- Replace src with your actual logo file -->
                 <img src="logo.png" alt="Cafe Blue J">
                 <span class="logo-text">Cafe <span class="blue">Blue J</span></span>
             </a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#offers">Offers</a></li>
+                <li><a href="#sliderSection">Slider</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#menu">Menu</a></li>
-                <li><a href="#offers">Offers</a></li>
                 <li><a href="#reviews">Reviews</a></li>
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -2207,7 +2318,7 @@
         </div>
     </nav>
 
-    <!-- ===== HERO — FAST LOADING FIX ===== -->
+    <!-- ===== HERO ===== -->
     <section class="hero" id="home">
         <div class="hero-bg"></div>
         <div class="hero-overlay"></div>
@@ -2225,58 +2336,94 @@
         <div class="scroll-cue"><span style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;">Scroll to discover</span><div class="line"></div></div>
     </section>
 
-    <!-- ===== PROMO SLIDER ===== -->
-    <section class="section" style="padding-top:90px;padding-bottom:90px;">
-        <div class="container">
-            <div class="slider-wrap reveal">
-                <div class="slider-track" id="sliderTrack">
-                    <div class="slide"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=600&auto=format&fit=crop" alt="Freshly brewed coffee" loading="lazy" onload="this.classList.add('loaded')">
-                        <div class="slide-content"><span class="eyebrow">01 — Coffee</span><h3>Freshly Brewed Coffee</h3><p>From classic espresso to chilled favourites, crafted for every coffee mood.</p><a href="#menu" class="btn btn-outline" style="padding:11px 22px;">Order Now</a></div>
-                    </div>
-                    <div class="slide"><img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?q=80&w=600&auto=format&fit=crop" alt="Fresh food" loading="lazy" onload="this.classList.add('loaded')">
-                        <div class="slide-content"><span class="eyebrow">02 — Food</span><h3>Fresh Food, Made to Order</h3><p>From sourdough toasts and croissant sandwiches to burgers and eggs.</p><a href="#menu" class="btn btn-outline" style="padding:11px 22px;">Explore Menu</a></div>
-                    </div>
-                    <div class="slide"><img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=600&auto=format&fit=crop" alt="Sweet cafe moments" loading="lazy" onload="this.classList.add('loaded')">
-                        <div class="slide-content"><span class="eyebrow">03 — Sweet</span><h3>Something Sweet</h3><p>French toast, hot chocolate and indulgent café favourites made for slow moments.</p><a href="#menu" class="btn btn-outline" style="padding:11px 22px;">Explore Menu</a></div>
-                    </div>
-                    <div class="slide"><img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=600&auto=format&fit=crop" alt="Cozy cafe escape" loading="lazy" onload="this.classList.add('loaded')">
-                        <div class="slide-content"><span class="eyebrow">04 — Ambience</span><h3>Your Café Escape</h3><p>A relaxed space in Mahim for coffee, conversations and everyday moments.</p><a href="#contact" class="btn btn-outline" style="padding:11px 22px;">Visit Us</a></div>
-                    </div>
-                </div>
-                <div class="slider-dots" id="sliderDots"></div>
-                <div class="slider-arrows">
-                    <button class="s-arrow" id="sPrev">‹</button>
-                    <button class="s-arrow" id="sNext">›</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- ===== OFFERS ===== -->
     <section class="section section-cream" id="offers">
         <div class="container">
             <div class="section-head reveal">
-                <span class="eyebrow">Offers</span>
-                <h2>Little Reasons to Stop By</h2>
-                <p>Seasonal specials and everyday indulgences — crafted to make your café moment better.</p>
+                <span class="eyebrow">Exclusive Deals</span>
+                <h2>Treat Yourself to Something <span class="head-accent">Special</span></h2>
+                <p>From comforting classics to seasonal surprises, our offers are crafted to make every café visit more memorable. Explore what's brewing today.</p>
             </div>
             <div class="offer-grid stagger">
                 <div class="offer-card reveal">
                     <div class="offer-img"><img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=400&auto=format&fit=crop" alt="Coffee and dessert" loading="lazy" onload="this.classList.add('loaded')"></div>
-                    <div class="offer-body"><span class="eyebrow">Everyday</span><h4>Coffee &amp; Dessert Moment</h4><p>Pair your favourite coffee with something sweet for the perfect café break.</p><a class="offer-link" href="#menu">Order Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+                    <div class="offer-body">
+                        <span class="eyebrow">Everyday</span>
+                        <h4>Coffee &amp; Dessert Moment</h4>
+                        <p>Pair your favourite coffee with something sweet for the perfect café break.</p>
+                        <!-- Scroll to menu on click -->
+                        <button type="button" class="offer-link" onclick="document.getElementById('menu').scrollIntoView({ behavior: 'smooth' })">
+                            Order Now
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </button>
+                    </div>
                 </div>
                 <div class="offer-card reveal">
                     <div class="offer-img"><img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=400&auto=format&fit=crop" alt="Weekend brunch" loading="lazy" onload="this.classList.add('loaded')"></div>
-                    <div class="offer-body"><span class="eyebrow">Sat – Sun</span><h4>Weekend Café Special</h4><p>Slow mornings, good coffee and comforting food.</p><a class="offer-link" href="#menu">Order Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+                    <div class="offer-body">
+                        <span class="eyebrow">Sat – Sun</span>
+                        <h4>Weekend Café Special</h4>
+                        <p>Slow mornings, good coffee and comforting food.</p>
+                        <button type="button" class="offer-link" onclick="document.getElementById('menu').scrollIntoView({ behavior: 'smooth' })">
+                            Order Now
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </button>
+                    </div>
                 </div>
                 <div class="offer-card reveal">
                     <div class="offer-img"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=400&auto=format&fit=crop" alt="Signature coffee" loading="lazy" onload="this.classList.add('loaded')"></div>
-                    <div class="offer-body"><span class="eyebrow">Signature</span><h4>Blue J Signature</h4><p>Discover some of Cafe Blue J's signature café favourites.</p><a class="offer-link" href="#menu">Order Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+                    <div class="offer-body">
+                        <span class="eyebrow">Signature</span>
+                        <h4>Blue J Signature</h4>
+                        <p>Discover some of Cafe Blue J's signature café favourites.</p>
+                        <button type="button" class="offer-link" onclick="document.getElementById('menu').scrollIntoView({ behavior: 'smooth' })">
+                            Order Now
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </button>
+                    </div>
                 </div>
                 <div class="offer-card reveal">
                     <div class="offer-img"><img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=400&auto=format&fit=crop" alt="Seasonal special" loading="lazy" onload="this.classList.add('loaded')"></div>
-                    <div class="offer-body"><span class="eyebrow">Limited</span><h4>Seasonal Special</h4><p>Fresh seasonal flavours, available for a limited time.</p><a class="offer-link" href="#menu">Order Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+                    <div class="offer-body">
+                        <span class="eyebrow">Limited</span>
+                        <h4>Seasonal Special</h4>
+                        <p>Fresh seasonal flavours, available for a limited time.</p>
+                        <button type="button" class="offer-link" onclick="document.getElementById('menu').scrollIntoView({ behavior: 'smooth' })">
+                            Order Now
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </button>
+                    </div>
                 </div>
+            </div>
+            <div class="offers-cta-wrap reveal">
+                <a href="#menu" class="btn btn-primary">View All Offers
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROMO SLIDER ===== -->
+    <section class="slider-section" id="sliderSection">
+        <div class="slider-wrap reveal">
+            <div class="slider-track" id="sliderTrack">
+                <div class="slide"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1000&auto=format&fit=crop" alt="Freshly brewed coffee" loading="lazy" onload="this.classList.add('loaded')">
+                    <div class="slide-content"><span class="eyebrow">01 — Coffee</span><h3>Freshly Brewed Coffee</h3><p>From classic espresso to chilled favourites, crafted for every coffee mood.</p><a href="#menu" class="btn btn-outline" style="padding:11px 22px;">Order Now</a></div>
+                </div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?q=80&w=1000&auto=format&fit=crop" alt="Fresh food" loading="lazy" onload="this.classList.add('loaded')">
+                    <div class="slide-content"><span class="eyebrow">02 — Food</span><h3>Fresh Food, Made to Order</h3><p>From sourdough toasts and croissant sandwiches to burgers and eggs.</p><a href="#menu" class="btn btn-outline" style="padding:11px 22px;">Explore Menu</a></div>
+                </div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=1000&auto=format&fit=crop" alt="Sweet cafe moments" loading="lazy" onload="this.classList.add('loaded')">
+                    <div class="slide-content"><span class="eyebrow">03 — Sweet</span><h3>Something Sweet</h3><p>French toast, hot chocolate and indulgent café favourites made for slow moments.</p><a href="#menu" class="btn btn-outline" style="padding:11px 22px;">Explore Menu</a></div>
+                </div>
+                <div class="slide"><img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=1000&auto=format&fit=crop" alt="Cozy cafe escape" loading="lazy" onload="this.classList.add('loaded')">
+                    <div class="slide-content"><span class="eyebrow">04 — Ambience</span><h3>Your Café Escape</h3><p>A relaxed space in Mahim for coffee, conversations and everyday moments.</p><a href="#contact" class="btn btn-outline" style="padding:11px 22px;">Visit Us</a></div>
+                </div>
+            </div>
+            <div class="slider-dots" id="sliderDots"></div>
+            <div class="slider-arrows">
+                <button class="s-arrow" id="sPrev">‹</button>
+                <button class="s-arrow" id="sNext">›</button>
             </div>
         </div>
     </section>
@@ -2465,7 +2612,7 @@
                 </div>
                 <div class="footer-col">
                     <h5>Explore</h5>
-                    <ul><li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#menu">Menu</a></li><li><a href="#offers">Offers</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#contact">Contact</a></li></ul>
+                    <ul><li><a href="#home">Home</a></li><li><a href="#offers">Offers</a></li><li><a href="#about">About</a></li><li><a href="#menu">Menu</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#contact">Contact</a></li></ul>
                 </div>
                 <div class="footer-col">
                     <h5>Order</h5>
@@ -2665,7 +2812,7 @@
         document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove(
             'open')));
 
-        const sections = ['home', 'about', 'menu', 'offers', 'reviews', 'gallery', 'contact'];
+        const sections = ['home', 'offers', 'sliderSection', 'about', 'menu', 'reviews', 'gallery', 'contact'];
         const navA = document.querySelectorAll('.nav-links a');
         window.addEventListener('scroll', () => {
             let cur = 'home';
