@@ -1,0 +1,3284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe Blue J — Bond Over Coffee</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,450&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CONFIG ===== */
+        :root {
+            --teal: #008C95;
+            --teal-deep: #006B73;
+            --peach: #D9A06F;
+            --cream: #F5E8DE;
+            --off-white: #FFFDFC;
+            --charcoal: #243238;
+            --serif: 'Fraunces', serif;
+            --sans: 'Manrope', sans-serif;
+            --ease: cubic-bezier(.22, 1, .36, 1);
+            --tax-rate: 0.05;
+            --service-rate: 0.07;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: var(--sans);
+            color: var(--charcoal);
+            background: var(--off-white);
+            overflow-x: hidden;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        ul {
+            list-style: none;
+        }
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        .eyebrow {
+            font-family: var(--sans);
+            font-size: 12px;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--teal);
+            font-weight: 700;
+        }
+        h1,
+        h2,
+        h3 {
+            font-family: var(--serif);
+            font-weight: 450;
+            line-height: 1.06;
+            color: var(--teal-deep);
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            border-radius: 2px;
+            font-size: 13px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            font-weight: 700;
+            transition: all .4s var(--ease);
+        }
+        .btn-primary {
+            background: var(--teal);
+            color: var(--off-white);
+        }
+        .btn-primary:hover {
+            background: var(--teal-deep);
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px -10px rgba(0, 140, 149, .5);
+        }
+        .btn-outline {
+            border: 1.5px solid var(--off-white);
+            color: var(--off-white);
+        }
+        .btn-outline:hover {
+            background: var(--off-white);
+            color: var(--teal-deep);
+            transform: translateY(-2px);
+        }
+        .btn-outline.dark {
+            border: 1.5px solid var(--teal-deep);
+            color: var(--teal-deep);
+        }
+        .btn-outline.dark:hover {
+            background: var(--teal-deep);
+            color: var(--off-white);
+        }
+        .btn svg {
+            width: 14px;
+            height: 14px;
+            transition: transform .35s var(--ease);
+        }
+        .btn:hover svg {
+            transform: translateX(4px);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity .9s var(--ease), transform .9s var(--ease);
+        }
+        .reveal.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 1s var(--ease), transform 1s var(--ease);
+        }
+        .reveal-left.in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 1s var(--ease), transform 1s var(--ease);
+        }
+        .reveal-right.in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .stagger .reveal:nth-child(1) {
+            transition-delay: 0s;
+        }
+        .stagger .reveal:nth-child(2) {
+            transition-delay: .1s;
+        }
+        .stagger .reveal:nth-child(3) {
+            transition-delay: .2s;
+        }
+        .stagger .reveal:nth-child(4) {
+            transition-delay: .3s;
+        }
+        .stagger .reveal:nth-child(5) {
+            transition-delay: .4s;
+        }
+        .stagger .reveal:nth-child(6) {
+            transition-delay: .5s;
+        }
+
+        /* ===== NAV ===== */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 500;
+            padding: 26px 0;
+            transition: all .5s var(--ease);
+        }
+        #navbar.scrolled {
+            background: rgba(255, 253, 252, .92);
+            backdrop-filter: blur(10px);
+            padding: 14px 0;
+            box-shadow: 0 8px 30px -12px rgba(36, 50, 56, .15);
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--serif);
+            font-size: 22px;
+            color: var(--off-white);
+            transition: color .5s var(--ease);
+            flex-shrink: 0;
+        }
+        #navbar.scrolled .nav-logo {
+            color: var(--teal-deep);
+        }
+        .nav-logo img {
+            height: 36px;
+            width: auto;
+            flex-shrink: 0;
+            display: block;
+            transition: height .4s var(--ease);
+        }
+        #navbar.scrolled .nav-logo img {
+            height: 30px;
+        }
+        .nav-logo .logo-text {
+            display: flex;
+            align-items: baseline;
+            gap: 2px;
+            font-size: 22px;
+            transition: font-size .4s var(--ease);
+        }
+        #navbar.scrolled .nav-logo .logo-text {
+            font-size: 20px;
+        }
+        .nav-logo .logo-text .blue {
+            font-weight: 450;
+            color: var(--peach);
+        }
+        #navbar.scrolled .nav-logo .logo-text .blue {
+            color: var(--teal-deep);
+        }
+        .nav-links {
+            display: flex;
+            gap: 38px;
+            align-items: center;
+        }
+        .nav-links a {
+            font-size: 13px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--off-white);
+            position: relative;
+            padding-bottom: 4px;
+            transition: color .5s var(--ease);
+        }
+        #navbar.scrolled .nav-links a {
+            color: var(--charcoal);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--peach);
+            transition: width .35s var(--ease);
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            flex-shrink: 0;
+        }
+        .cart-btn {
+            position: relative;
+            color: var(--off-white);
+            transition: color .5s var(--ease);
+        }
+        #navbar.scrolled .cart-btn {
+            color: var(--teal-deep);
+        }
+        .cart-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+        .cart-count {
+            position: absolute;
+            top: -9px;
+            right: -10px;
+            background: var(--peach);
+            color: var(--off-white);
+            font-size: 10px;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            width: 26px;
+            cursor: pointer;
+        }
+        .hamburger span {
+            height: 2px;
+            background: var(--off-white);
+            transition: .4s var(--ease);
+        }
+        #navbar.scrolled .hamburger span {
+            background: var(--teal-deep);
+        }
+
+        /* ===== HERO — FAST LOADING FIX ===== */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 640px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: var(--teal-deep);
+            /* solid fallback — loads instantly */
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-color: var(--teal-deep);
+            /* solid color fallback */
+            background-image: url('https://images.unsplash.com/photo-1445116572660-236099ec97a0?q=80&w=800&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            transform: scale(1.12);
+            transition: transform 2.4s var(--ease), opacity .8s var(--ease);
+            opacity: 0;
+        }
+        .hero.loaded .hero-bg {
+            transform: scale(1);
+            opacity: 1;
+        }
+        /* subtle loading shimmer while image loads */
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, .06) 50%, transparent 60%);
+            background-size: 200% 100%;
+            animation: shimmer 2.2s infinite;
+            pointer-events: none;
+        }
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+        .hero.loaded .hero-bg::before {
+            animation: none;
+            opacity: 0;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 80, 86, .55) 0%, rgba(0, 60, 66, .72) 60%, rgba(0, 50, 56, .85) 100%);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: var(--off-white);
+            max-width: 720px;
+        }
+        .hero-brand {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all .9s .3s var(--ease);
+        }
+        .hero.loaded .hero-brand {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hero-brand span {
+            font-size: 13px;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--peach);
+            font-weight: 700;
+        }
+        .hero h1 {
+            font-size: clamp(42px, 6.4vw, 84px);
+            margin: 18px 0 22px;
+            color: var(--off-white);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s .5s var(--ease);
+        }
+        .hero.loaded h1 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hero p {
+            font-size: 18px;
+            line-height: 1.65;
+            max-width: 520px;
+            color: rgba(255, 253, 252, .88);
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all .9s .7s var(--ease);
+        }
+        .hero.loaded p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hero-ctas {
+            display: flex;
+            gap: 18px;
+            margin-top: 38px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all .8s .9s var(--ease);
+        }
+        .hero.loaded .hero-ctas {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .scroll-cue {
+            position: absolute;
+            bottom: 36px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--off-white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: .7;
+            z-index: 2;
+        }
+        .scroll-cue .line {
+            width: 1px;
+            height: 40px;
+            background: rgba(255, 253, 252, .6);
+            position: relative;
+            overflow: hidden;
+        }
+        .scroll-cue .line::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: var(--peach);
+            animation: scrollDown 1.8s infinite ease-in-out;
+        }
+        @keyframes scrollDown {
+            0% {
+                top: -40%;
+            }
+            100% {
+                top: 100%;
+            }
+        }
+
+        /* ===== SECTION GENERIC ===== */
+        .section {
+            padding: 120px 0;
+        }
+        .section-cream {
+            background: var(--cream);
+        }
+        .section-head {
+            max-width: 640px;
+            margin-bottom: 64px;
+        }
+        .section-head.center {
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        .section-head h2 {
+            font-size: clamp(32px, 4.4vw, 52px);
+            margin-top: 14px;
+        }
+        .section-head p {
+            margin-top: 16px;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #4d5d62;
+        }
+
+        /* ===== PROMO SLIDER ===== */
+        .slider-wrap {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            background: var(--teal-deep);
+        }
+        .slider-track {
+            display: flex;
+            transition: transform .8s var(--ease);
+        }
+        .slide {
+            min-width: 100%;
+            position: relative;
+            height: 460px;
+            display: flex;
+            align-items: flex-end;
+            background: var(--teal-deep);
+        }
+        .slide img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity .6s var(--ease);
+        }
+        .slide img.loaded {
+            opacity: 1;
+        }
+        .slide::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(0, 50, 56, .82) 0%, rgba(0, 50, 56, .1) 55%);
+        }
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            padding: 48px;
+            color: var(--off-white);
+            max-width: 480px;
+        }
+        .slide-content .eyebrow {
+            color: var(--peach);
+        }
+        .slide-content h3 {
+            color: var(--off-white);
+            font-size: 32px;
+            margin: 10px 0 10px;
+        }
+        .slide-content p {
+            font-size: 15px;
+            color: rgba(255, 253, 252, .85);
+            margin-bottom: 20px;
+        }
+        .slider-arrows {
+            position: absolute;
+            bottom: 24px;
+            right: 32px;
+            display: flex;
+            gap: 10px;
+            z-index: 3;
+        }
+        .s-arrow {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 253, 252, .5);
+            color: var(--off-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .3s;
+            font-size: 20px;
+            background: rgba(0, 0, 0, .15);
+        }
+        .s-arrow:hover {
+            background: var(--peach);
+            border-color: var(--peach);
+        }
+        .slider-dots {
+            position: absolute;
+            bottom: 32px;
+            left: 48px;
+            display: flex;
+            gap: 8px;
+            z-index: 3;
+        }
+        .s-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 253, 252, .4);
+            transition: .3s;
+            cursor: pointer;
+        }
+        .s-dot.active {
+            background: var(--peach);
+            width: 22px;
+            border-radius: 5px;
+        }
+
+        /* ===== OFFERS ===== */
+        .offer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        .offer-card {
+            background: var(--off-white);
+            border-radius: 3px;
+            overflow: hidden;
+            border: 1px solid #eadfd3;
+            transition: all .5s var(--ease);
+        }
+        .offer-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 50px -20px rgba(36, 50, 56, .2);
+        }
+        .offer-img {
+            height: 190px;
+            overflow: hidden;
+            background: var(--cream);
+        }
+        .offer-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .6s var(--ease);
+            opacity: 0;
+            transition: opacity .6s var(--ease), transform .6s var(--ease);
+        }
+        .offer-img img.loaded {
+            opacity: 1;
+        }
+        .offer-card:hover .offer-img img {
+            transform: scale(1.08);
+        }
+        .offer-body {
+            padding: 26px 24px 28px;
+        }
+        .offer-body .eyebrow {
+            font-size: 11px;
+        }
+        .offer-body h4 {
+            font-family: var(--serif);
+            font-size: 21px;
+            color: var(--teal-deep);
+            margin: 8px 0 8px;
+        }
+        .offer-body p {
+            font-size: 14px;
+            color: #5c6c71;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .offer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: var(--teal);
+        }
+        .offer-link svg {
+            width: 12px;
+            height: 12px;
+            transition: transform .3s var(--ease);
+        }
+        .offer-card:hover .offer-link svg {
+            transform: translateX(5px);
+        }
+
+        /* ===== ABOUT ===== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        .about-img {
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+            height: 560px;
+            background: var(--cream);
+        }
+        .about-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity .6s var(--ease);
+        }
+        .about-img img.loaded {
+            opacity: 1;
+        }
+        .about-badge {
+            position: absolute;
+            bottom: -1px;
+            right: -1px;
+            background: var(--peach);
+            color: var(--off-white);
+            padding: 26px 30px;
+            font-family: var(--serif);
+            text-align: center;
+        }
+        .about-badge b {
+            display: block;
+            font-size: 34px;
+            line-height: 1;
+        }
+        .about-badge span {
+            font-size: 11px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            font-family: var(--sans);
+            font-weight: 700;
+        }
+        .about-content h2 {
+            font-size: clamp(30px, 4vw, 44px);
+            margin: 14px 0 22px;
+        }
+        .about-content p {
+            font-size: 16px;
+            line-height: 1.75;
+            color: #4d5d62;
+            margin-bottom: 16px;
+        }
+        .highlights-inline {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 32px;
+        }
+        .hl-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 0;
+            border-top: 1px solid #e4d6c8;
+        }
+        .hl-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--teal);
+        }
+        .hl-icon svg {
+            width: 18px;
+            height: 18px;
+        }
+        .hl-item span {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+
+        /* ===== MENU ===== */
+        .menu-section {
+            background: var(--teal-deep);
+            color: var(--off-white);
+            position: relative;
+        }
+        .menu-section .section-head p {
+            color: rgba(255, 253, 252, .75);
+        }
+        .menu-section .section-head .eyebrow {
+            color: var(--peach);
+        }
+        .menu-section .section-head h2 {
+            color: var(--off-white);
+        }
+        .menu-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 44px;
+            flex-wrap: wrap;
+        }
+        .menu-search {
+            position: relative;
+            flex: 1;
+            min-width: 220px;
+            max-width: 340px;
+        }
+        .menu-search input {
+            width: 100%;
+            padding: 13px 18px 13px 42px;
+            background: rgba(255, 253, 252, .08);
+            border: 1px solid rgba(255, 253, 252, .25);
+            border-radius: 2px;
+            color: var(--off-white);
+            font-size: 14px;
+            transition: border-color .3s;
+        }
+        .menu-search input::placeholder {
+            color: rgba(255, 253, 252, .5);
+        }
+        .menu-search input:focus {
+            outline: none;
+            border-color: var(--peach);
+        }
+        .menu-search svg {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: rgba(255, 253, 252, .5);
+        }
+        .cat-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            scrollbar-width: none;
+        }
+        .cat-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .cat-pill {
+            white-space: nowrap;
+            padding: 10px 20px;
+            border: 1px solid rgba(255, 253, 252, .28);
+            border-radius: 30px;
+            font-size: 12.5px;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: rgba(255, 253, 252, .8);
+            transition: all .35s var(--ease);
+            flex-shrink: 0;
+        }
+        .cat-pill:hover {
+            border-color: var(--peach);
+            color: var(--off-white);
+        }
+        .cat-pill.active {
+            background: var(--peach);
+            border-color: var(--peach);
+            color: var(--teal-deep);
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+        .menu-card {
+            background: rgba(255, 253, 252, .05);
+            border: 1px solid rgba(255, 253, 252, .14);
+            border-radius: 3px;
+            overflow: hidden;
+            transition: all .5s var(--ease);
+            opacity: 0;
+            transform: translateY(18px) scale(.98);
+        }
+        .menu-card.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .menu-card:hover {
+            background: rgba(255, 253, 252, .09);
+            border-color: var(--peach);
+            transform: translateY(-4px);
+        }
+        .menu-card .mc-img {
+            height: 140px;
+            overflow: hidden;
+            background: rgba(255, 253, 252, .08);
+        }
+        .menu-card .mc-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .6s var(--ease);
+            opacity: 0;
+            transition: opacity .5s var(--ease), transform .6s var(--ease);
+        }
+        .menu-card .mc-img img.loaded {
+            opacity: 1;
+        }
+        .menu-card:hover .mc-img img {
+            transform: scale(1.05);
+        }
+        .mc-body {
+            padding: 18px 20px 20px;
+        }
+        .mc-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 6px;
+        }
+        .mc-top h4 {
+            font-family: var(--serif);
+            font-size: 18px;
+            color: var(--off-white);
+            line-height: 1.25;
+        }
+        .mc-price {
+            font-family: var(--serif);
+            font-size: 17px;
+            color: var(--peach);
+            white-space: nowrap;
+        }
+        .menu-card p {
+            font-size: 13px;
+            line-height: 1.6;
+            color: rgba(255, 253, 252, .65);
+            margin-bottom: 14px;
+            min-height: 18px;
+        }
+        .mc-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .mc-cat-tag {
+            font-size: 10px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: rgba(255, 253, 252, .4);
+            font-weight: 700;
+        }
+        .add-btn {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 16px;
+            background: transparent;
+            border: 1px solid var(--peach);
+            color: var(--peach);
+            border-radius: 2px;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            transition: all .35s var(--ease);
+        }
+        .add-btn:hover {
+            background: var(--peach);
+            color: var(--teal-deep);
+        }
+        .add-btn.added {
+            background: var(--peach);
+            color: var(--teal-deep);
+        }
+        .qty-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--peach);
+            color: var(--teal-deep);
+            border-radius: 2px;
+            padding: 5px 8px;
+        }
+        .qty-row button {
+            width: 22px;
+            height: 22px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--teal-deep);
+        }
+        .qty-row .qn {
+            font-size: 13px;
+            font-weight: 700;
+            min-width: 14px;
+            text-align: center;
+        }
+        .menu-empty {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 60px 0;
+            color: rgba(255, 253, 252, .5);
+            font-size: 15px;
+        }
+
+        /* ===== REVIEWS ===== */
+        .review-wrap {
+            position: relative;
+            max-width: 760px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .review-track {
+            display: flex;
+            transition: transform .7s var(--ease);
+        }
+        .review-slide {
+            min-width: 100%;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .stars {
+            color: var(--peach);
+            font-size: 16px;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+        .review-slide p {
+            font-family: var(--serif);
+            font-size: 24px;
+            line-height: 1.5;
+            color: var(--teal-deep);
+            margin-bottom: 26px;
+            font-style: italic;
+        }
+        .review-who {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--teal);
+            color: var(--off-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--serif);
+            font-size: 19px;
+            margin-bottom: 6px;
+        }
+        .review-who b {
+            font-size: 14px;
+        }
+        .review-who span {
+            font-size: 12px;
+            color: #6d7c81;
+        }
+        .review-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 36px;
+            align-items: center;
+        }
+        .r-arrow {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #d9c7b4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .3s;
+            color: var(--teal-deep);
+            font-size: 18px;
+            background: var(--off-white);
+        }
+        .r-arrow:hover {
+            background: var(--teal);
+            border-color: var(--teal);
+            color: var(--off-white);
+        }
+        .review-dots {
+            display: flex;
+            gap: 7px;
+        }
+        .r-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #d9c7b4;
+            transition: .3s;
+            cursor: pointer;
+        }
+        .r-dot.active {
+            background: var(--teal);
+            width: 18px;
+            border-radius: 5px;
+        }
+
+        /* ===== GALLERY ===== */
+        .gallery-grid {
+            columns: 4 220px;
+            column-gap: 18px;
+        }
+        .g-item {
+            break-inside: avoid;
+            margin-bottom: 18px;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            background: var(--cream);
+        }
+        .g-item img {
+            width: 100%;
+            display: block;
+            transition: transform .6s var(--ease);
+            opacity: 0;
+            transition: opacity .5s var(--ease), transform .6s var(--ease);
+        }
+        .g-item img.loaded {
+            opacity: 1;
+        }
+        .g-item:hover img {
+            transform: scale(1.05);
+        }
+        .g-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(0, 50, 56, .6), transparent 55%);
+            opacity: 0;
+            transition: opacity .4s;
+            display: flex;
+            align-items: flex-end;
+            padding: 16px;
+        }
+        .g-item:hover .g-overlay {
+            opacity: 1;
+        }
+        .g-overlay span {
+            color: var(--off-white);
+            font-size: 12px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* ===== LIGHTBOX ===== */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 800;
+            background: rgba(0, 0, 0, .88);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .4s var(--ease), visibility .4s var(--ease);
+            padding: 20px;
+        }
+        .lightbox.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox-content {
+            position: relative;
+            max-width: 92vw;
+            max-height: 88vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox-content img {
+            max-width: 92vw;
+            max-height: 82vh;
+            object-fit: contain;
+            border-radius: 3px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, .6);
+        }
+        .lb-close {
+            position: absolute;
+            top: -44px;
+            right: 0;
+            color: var(--off-white);
+            font-size: 28px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 50%;
+            transition: .3s;
+        }
+        .lb-close:hover {
+            background: rgba(255, 255, 255, .2);
+        }
+        .lb-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--off-white);
+            font-size: 30px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, .08);
+            border-radius: 50%;
+            transition: .3s;
+        }
+        .lb-nav:hover {
+            background: rgba(255, 255, 255, .2);
+        }
+        .lb-prev {
+            left: -60px;
+        }
+        .lb-next {
+            right: -60px;
+        }
+        .lb-counter {
+            position: absolute;
+            bottom: -36px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, .6);
+            font-size: 13px;
+            letter-spacing: .1em;
+        }
+        @media(max-width:768px) {
+            .lb-prev {
+                left: 4px;
+            }
+            .lb-next {
+                right: 4px;
+            }
+            .lb-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+                background: rgba(0, 0, 0, .3);
+            }
+            .lb-close {
+                top: 6px;
+                right: 6px;
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+                background: rgba(0, 0, 0, .4);
+            }
+            .lb-counter {
+                bottom: -30px;
+                font-size: 11px;
+            }
+        }
+
+        /* ===== INSTAGRAM ===== */
+        .insta-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 4px;
+        }
+        .insta-item {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            cursor: pointer;
+            background: var(--cream);
+        }
+        .insta-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .5s var(--ease);
+            opacity: 0;
+            transition: opacity .5s var(--ease), transform .5s var(--ease);
+        }
+        .insta-item img.loaded {
+            opacity: 1;
+        }
+        .insta-item:hover img {
+            transform: scale(1.1);
+        }
+        .insta-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 80, 86, .55);
+            opacity: 0;
+            transition: .4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--off-white);
+        }
+        .insta-item:hover .insta-overlay {
+            opacity: 1;
+        }
+        .insta-overlay svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* ===== VISIT / CONTACT ===== */
+        .visit-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center;
+        }
+        .map-box {
+            height: 420px;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            background: var(--cream);
+        }
+        .map-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(.15) saturate(.8);
+            opacity: 0;
+            transition: opacity .6s var(--ease);
+        }
+        .map-box img.loaded {
+            opacity: 1;
+        }
+        .info-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 26px;
+            align-items: flex-start;
+        }
+        .info-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--teal);
+            color: var(--off-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .info-icon svg {
+            width: 19px;
+            height: 19px;
+        }
+        .info-row h5 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--teal);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        .info-row p {
+            font-size: 15px;
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+        .hours-table {
+            margin-top: 8px;
+            border-top: 1px solid #e4d6c8;
+            padding-top: 14px;
+        }
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 14px;
+            color: #4d5d62;
+        }
+        .hours-row b {
+            color: var(--charcoal);
+            font-weight: 600;
+        }
+
+        .contact-wrap {
+            display: grid;
+            grid-template-columns: .9fr 1.1fr;
+            gap: 70px;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .field label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            font-weight: 700;
+            color: var(--teal-deep);
+        }
+        .field input,
+        .field textarea {
+            padding: 14px 16px;
+            border: 1.5px solid #e4d6c8;
+            border-radius: 2px;
+            background: var(--off-white);
+            font-family: inherit;
+            font-size: 14.5px;
+            color: var(--charcoal);
+            transition: border-color .35s var(--ease);
+        }
+        .field input:focus,
+        .field textarea:focus {
+            outline: none;
+            border-color: var(--teal);
+        }
+        .field textarea {
+            resize: vertical;
+            min-height: 110px;
+        }
+        .contact-success {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--cream);
+            border-radius: 4px;
+        }
+        .contact-success.show {
+            display: block;
+        }
+        .contact-success .check-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--teal);
+            color: var(--off-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+        .contact-success .check-circle svg {
+            width: 28px;
+            height: 28px;
+        }
+        .contact-success h4 {
+            font-family: var(--serif);
+            font-size: 22px;
+            color: var(--teal-deep);
+        }
+        .contact-success p {
+            color: #4d5d62;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--teal-deep);
+            color: rgba(255, 253, 252, .85);
+            padding: 80px 0 30px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+            gap: 50px;
+            padding-bottom: 50px;
+            border-bottom: 1px solid rgba(255, 253, 252, .15);
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--serif);
+            font-size: 24px;
+            color: var(--off-white);
+            margin-bottom: 16px;
+        }
+        .footer-logo img {
+            height: 36px;
+            width: auto;
+            flex-shrink: 0;
+            display: block;
+        }
+        .footer-logo .logo-text .blue {
+            color: var(--peach);
+            font-weight: 450;
+        }
+        .footer-grid p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: rgba(255, 253, 252, .6);
+            max-width: 280px;
+        }
+        .footer-col h5 {
+            font-size: 12px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--peach);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .footer-col li {
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: rgba(255, 253, 252, .75);
+        }
+        .footer-col a:hover {
+            color: var(--peach);
+        }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 26px;
+            font-size: 12.5px;
+            color: rgba(255, 253, 252, .5);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* ===== CART DRAWER ===== */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(36, 50, 56, .55);
+            z-index: 900;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .45s var(--ease);
+        }
+        .overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 440px;
+            max-width: 92vw;
+            background: var(--off-white);
+            z-index: 901;
+            transform: translateX(100%);
+            transition: transform .5s var(--ease);
+            display: flex;
+            flex-direction: column;
+        }
+        .drawer.open {
+            transform: translateX(0);
+        }
+        .drawer-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 26px 28px;
+            border-bottom: 1px solid #eee1d3;
+        }
+        .drawer-head h3 {
+            font-size: 22px;
+        }
+        .drawer-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--cream);
+            transition: .3s;
+            font-size: 18px;
+        }
+        .drawer-close:hover {
+            background: var(--peach);
+            color: var(--off-white);
+        }
+        .drawer-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 28px;
+        }
+        .cart-item {
+            display: flex;
+            gap: 14px;
+            padding: 16px 0;
+            border-bottom: 1px solid #f1e6d9;
+            align-items: center;
+        }
+        .cart-item .ci-thumb {
+            width: 54px;
+            height: 54px;
+            border-radius: 3px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: var(--cream);
+        }
+        .cart-item .ci-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .ci-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .ci-info h5 {
+            font-family: var(--serif);
+            font-size: 15px;
+            color: var(--teal-deep);
+            margin-bottom: 2px;
+        }
+        .ci-info .ci-price {
+            font-size: 12px;
+            color: #7c8b90;
+        }
+        .ci-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 8px;
+            gap: 10px;
+        }
+        .ci-qty {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--cream);
+            border-radius: 2px;
+            padding: 4px 6px;
+        }
+        .ci-qty button {
+            width: 20px;
+            height: 20px;
+            font-weight: 700;
+            color: var(--teal-deep);
+            font-size: 14px;
+        }
+        .ci-qty .qn {
+            font-size: 13px;
+            font-weight: 600;
+            min-width: 14px;
+            text-align: center;
+        }
+        .ci-remove {
+            font-size: 11px;
+            color: #b0554a;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            font-weight: 700;
+        }
+        .ci-sub {
+            font-family: var(--serif);
+            color: var(--charcoal);
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .cart-empty {
+            text-align: center;
+            padding: 60px 10px;
+            color: #8a9599;
+        }
+        .cart-empty svg {
+            width: 52px;
+            height: 52px;
+            color: #d9c7b4;
+            margin: 0 auto 16px;
+        }
+        .drawer-foot {
+            padding: 22px 28px 28px;
+            border-top: 1px solid #eee1d3;
+        }
+        .bill-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #5c6c71;
+            padding: 5px 0;
+        }
+        .bill-row.total {
+            font-size: 19px;
+            color: var(--teal-deep);
+            font-family: var(--serif);
+            padding-top: 12px;
+            margin-top: 6px;
+            border-top: 1px solid #eee1d3;
+        }
+        .drawer-foot .btn {
+            width: 100%;
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        /* ===== MODAL (checkout) ===== */
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 950;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .4s var(--ease);
+        }
+        .modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-card {
+            background: var(--off-white);
+            width: 520px;
+            max-width: 92vw;
+            max-height: 88vh;
+            overflow-y: auto;
+            border-radius: 4px;
+            padding: 40px;
+            transform: translateY(30px) scale(.97);
+            transition: transform .45s var(--ease);
+            position: relative;
+        }
+        .modal.open .modal-card {
+            transform: translateY(0) scale(1);
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .step-progress {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 30px;
+        }
+        .step-progress span {
+            flex: 1;
+            height: 3px;
+            background: #eee1d3;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .step-progress span i {
+            display: block;
+            height: 100%;
+            background: var(--teal);
+            width: 0;
+            transition: width .5s var(--ease);
+        }
+        .step-progress span.done i {
+            width: 100%;
+        }
+        .modal-card h3 {
+            font-size: 26px;
+            margin-bottom: 6px;
+        }
+        .modal-sub {
+            font-size: 14px;
+            color: #7c8b90;
+            margin-bottom: 26px;
+        }
+        .tables-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 6px;
+        }
+        .table-card {
+            border: 1.5px solid #e4d6c8;
+            border-radius: 3px;
+            padding: 18px 8px;
+            text-align: center;
+            transition: all .3s var(--ease);
+            position: relative;
+            cursor: pointer;
+        }
+        .table-card:hover {
+            border-color: var(--teal);
+        }
+        .table-card.selected {
+            border-color: var(--teal);
+            background: var(--cream);
+        }
+        .table-card b {
+            display: block;
+            font-family: var(--serif);
+            font-size: 17px;
+            color: var(--teal-deep);
+        }
+        .table-card span {
+            font-size: 11px;
+            color: #8a9599;
+        }
+        .check-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 20px;
+            height: 20px;
+            background: var(--peach);
+            border-radius: 50%;
+            color: var(--off-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            opacity: 0;
+            transform: scale(.5);
+            transition: all .3s var(--ease);
+        }
+        .table-card.selected .check-badge {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .pay-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 6px;
+        }
+        .pay-card {
+            border: 1.5px solid #e4d6c8;
+            border-radius: 3px;
+            padding: 26px 10px;
+            text-align: center;
+            transition: all .3s var(--ease);
+            position: relative;
+            cursor: pointer;
+        }
+        .pay-card:hover {
+            border-color: var(--teal);
+        }
+        .pay-card.selected {
+            border-color: var(--teal);
+            background: var(--cream);
+        }
+        .pay-card svg {
+            width: 26px;
+            height: 26px;
+            color: var(--teal-deep);
+            margin: 0 auto 10px;
+        }
+        .pay-card b {
+            font-size: 14px;
+        }
+        .modal-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            margin-top: 32px;
+        }
+        .modal-nav .btn {
+            flex: 1;
+            justify-content: center;
+        }
+        .btn-ghost {
+            background: var(--cream);
+            color: var(--teal-deep);
+        }
+        .btn-ghost:hover {
+            background: #ecdcc8;
+        }
+        .summary-block {
+            margin-bottom: 20px;
+        }
+        .summary-block h5 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--teal);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .summary-block p {
+            font-size: 14.5px;
+            color: var(--charcoal);
+            line-height: 1.7;
+        }
+        .summary-item-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            padding: 4px 0;
+            color: #4d5d62;
+        }
+        .btn-disabled {
+            opacity: .45;
+            pointer-events: none;
+        }
+
+        .confirm-wrap {
+            text-align: center;
+        }
+        .check-circle {
+            width: 78px;
+            height: 78px;
+            border-radius: 50%;
+            background: var(--teal);
+            color: var(--off-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 22px;
+        }
+        .check-circle svg {
+            width: 36px;
+            height: 36px;
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: draw .6s .2s forwards ease-out;
+        }
+        @keyframes draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        .confirm-id {
+            font-family: var(--serif);
+            font-size: 15px;
+            color: var(--peach);
+            margin-bottom: 6px;
+        }
+        .confirm-details {
+            text-align: left;
+            background: var(--cream);
+            border-radius: 3px;
+            padding: 20px 22px;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+        .confirm-details .dr {
+            display: flex;
+            justify-content: space-between;
+            padding: 7px 0;
+            border-bottom: 1px solid #e9dcc9;
+            color: #4d5d62;
+        }
+        .confirm-details .dr:last-child {
+            border-bottom: none;
+        }
+        .confirm-details .dr b {
+            color: var(--charcoal);
+        }
+        .toast {
+            position: fixed;
+            bottom: 26px;
+            right: 26px;
+            z-index: 1000;
+            background: var(--teal-deep);
+            color: var(--off-white);
+            padding: 14px 22px;
+            border-radius: 3px;
+            font-size: 13.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all .4s var(--ease);
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* ============================================================
+           RESPONSIVE LOGO & NAV
+           ============================================================ */
+        @media(max-width:980px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: 280px;
+                background: var(--off-white);
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 0 40px;
+                gap: 28px;
+                transform: translateX(100%);
+                transition: transform .5s var(--ease);
+                z-index: 600;
+            }
+            .nav-links.open {
+                transform: translateX(0);
+            }
+            .nav-links a {
+                color: var(--teal-deep) !important;
+            }
+            .about-grid,
+            .visit-grid,
+            .contact-wrap {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .about-img {
+                height: 380px;
+            }
+            .offer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .gallery-grid {
+                columns: 2 160px;
+            }
+            .insta-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 36px;
+            }
+            .lightbox-content img {
+                max-height: 70vh;
+            }
+
+            /* Logo responsive - tablet */
+            .nav-logo img {
+                height: 30px;
+            }
+            #navbar.scrolled .nav-logo img {
+                height: 26px;
+            }
+            .nav-logo .logo-text {
+                font-size: 19px;
+            }
+            #navbar.scrolled .nav-logo .logo-text {
+                font-size: 17px;
+            }
+            .nav-logo {
+                gap: 8px;
+            }
+            .nav-right .btn {
+                padding: 9px 16px;
+                font-size: 11px;
+            }
+        }
+
+        @media(max-width:640px) {
+            .section {
+                padding: 80px 0;
+            }
+            .container {
+                padding: 0 20px;
+            }
+            .offer-grid {
+                grid-template-columns: 1fr;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            .tables-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .drawer {
+                width: 100vw;
+                max-width: 100vw;
+            }
+            .slide-content {
+                padding: 28px;
+            }
+            .slide-content h3 {
+                font-size: 24px;
+            }
+            .modal-card {
+                padding: 28px 20px;
+            }
+            .pay-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+
+            /* Logo responsive - mobile */
+            .nav-logo img {
+                height: 26px;
+            }
+            #navbar.scrolled .nav-logo img {
+                height: 22px;
+            }
+            .nav-logo .logo-text {
+                font-size: 17px;
+            }
+            #navbar.scrolled .nav-logo .logo-text {
+                font-size: 15px;
+            }
+            .nav-logo {
+                gap: 6px;
+            }
+            .nav-right .btn {
+                padding: 7px 12px;
+                font-size: 10px;
+                gap: 6px;
+            }
+            .nav-right .btn svg {
+                width: 12px;
+                height: 12px;
+            }
+            .cart-btn svg {
+                width: 18px;
+                height: 18px;
+            }
+            .cart-count {
+                width: 16px;
+                height: 16px;
+                font-size: 9px;
+                top: -8px;
+                right: -8px;
+            }
+            .nav-right {
+                gap: 14px;
+            }
+
+            /* Footer logo responsive */
+            .footer-logo img {
+                height: 30px;
+            }
+            .footer-logo {
+                font-size: 20px;
+            }
+            .footer-logo .logo-text {
+                font-size: 20px;
+            }
+        }
+
+        @media(max-width:400px) {
+            .nav-logo img {
+                height: 22px;
+            }
+            #navbar.scrolled .nav-logo img {
+                height: 18px;
+            }
+            .nav-logo .logo-text {
+                font-size: 14px;
+            }
+            #navbar.scrolled .nav-logo .logo-text {
+                font-size: 13px;
+            }
+            .nav-logo {
+                gap: 5px;
+            }
+            .nav-right .btn {
+                padding: 5px 10px;
+                font-size: 9px;
+            }
+            .footer-logo img {
+                height: 26px;
+            }
+            .footer-logo {
+                font-size: 17px;
+            }
+            .footer-logo .logo-text {
+                font-size: 17px;
+            }
+        }
+
+        @media(max-width:360px) {
+            .nav-logo .logo-text {
+                font-size: 13px;
+            }
+            .nav-logo img {
+                height: 20px;
+            }
+            .nav-right .btn {
+                padding: 4px 8px;
+                font-size: 8px;
+            }
+            .cart-btn svg {
+                width: 16px;
+                height: 16px;
+            }
+            .nav-right {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAV ===== -->
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a href="#home" class="nav-logo">
+                <!-- Replace src with your actual logo file -->
+                <img src="logo.png" alt="Cafe Blue J">
+                <span class="logo-text">Cafe <span class="blue">Blue J</span></span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#offers">Offers</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="#menu" class="btn btn-primary" id="orderNowBtn" style="padding:11px 22px;">Order Now</a>
+                <button class="cart-btn" id="cartOpenBtn" aria-label="Open cart">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO — FAST LOADING FIX ===== -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <div class="hero-brand"><span>Mahim, Mumbai</span></div>
+            <h1>Good Food. Great Coffee.<br>Better Moments.</h1>
+            <p>A cozy café where handcrafted coffee, freshly prepared food and warm conversations come together.</p>
+            <div class="hero-ctas">
+                <a href="#menu" class="btn btn-primary">Order Now
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a href="#menu" class="btn btn-outline">Explore Menu</a>
+            </div>
+        </div>
+        <div class="scroll-cue"><span style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;">Scroll to discover</span><div class="line"></div></div>
+    </section>
+
+    <!-- ===== PROMO SLIDER ===== -->
+    <section class="section" style="padding-top:90px;padding-bottom:90px;">
+        <div class="container">
+            <div class="slider-wrap reveal">
+                <div class="slider-track" id="sliderTrack">
+                    <div class="slide"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=600&auto=format&fit=crop" alt="Freshly brewed coffee" loading="lazy" onload="this.classList.add('loaded')">
+                        <div class="slide-content"><span class="eyebrow">01 — Coffee</span><h3>Freshly Brewed Coffee</h3><p>From classic espresso to chilled favourites, crafted for every coffee mood.</p><a href="#menu" class="btn btn-outline" style="padding:11px 22px;">Order Now</a></div>
+                    </div>
+                    <div class="slide"><img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?q=80&w=600&auto=format&fit=crop" alt="Fresh food" loading="lazy" onload="this.classList.add('loaded')">
+                        <div class="slide-content"><span class="eyebrow">02 — Food</span><h3>Fresh Food, Made to Order</h3><p>From sourdough toasts and croissant sandwiches to burgers and eggs.</p><a href="#menu" class="btn btn-outline" style="padding:11px 22px;">Explore Menu</a></div>
+                    </div>
+                    <div class="slide"><img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=600&auto=format&fit=crop" alt="Sweet cafe moments" loading="lazy" onload="this.classList.add('loaded')">
+                        <div class="slide-content"><span class="eyebrow">03 — Sweet</span><h3>Something Sweet</h3><p>French toast, hot chocolate and indulgent café favourites made for slow moments.</p><a href="#menu" class="btn btn-outline" style="padding:11px 22px;">Explore Menu</a></div>
+                    </div>
+                    <div class="slide"><img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=600&auto=format&fit=crop" alt="Cozy cafe escape" loading="lazy" onload="this.classList.add('loaded')">
+                        <div class="slide-content"><span class="eyebrow">04 — Ambience</span><h3>Your Café Escape</h3><p>A relaxed space in Mahim for coffee, conversations and everyday moments.</p><a href="#contact" class="btn btn-outline" style="padding:11px 22px;">Visit Us</a></div>
+                    </div>
+                </div>
+                <div class="slider-dots" id="sliderDots"></div>
+                <div class="slider-arrows">
+                    <button class="s-arrow" id="sPrev">‹</button>
+                    <button class="s-arrow" id="sNext">›</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== OFFERS ===== -->
+    <section class="section section-cream" id="offers">
+        <div class="container">
+            <div class="section-head reveal">
+                <span class="eyebrow">Offers</span>
+                <h2>Little Reasons to Stop By</h2>
+                <p>Seasonal specials and everyday indulgences — crafted to make your café moment better.</p>
+            </div>
+            <div class="offer-grid stagger">
+                <div class="offer-card reveal">
+                    <div class="offer-img"><img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=400&auto=format&fit=crop" alt="Coffee and dessert" loading="lazy" onload="this.classList.add('loaded')"></div>
+                    <div class="offer-body"><span class="eyebrow">Everyday</span><h4>Coffee &amp; Dessert Moment</h4><p>Pair your favourite coffee with something sweet for the perfect café break.</p><a class="offer-link" href="#menu">Order Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+                </div>
+                <div class="offer-card reveal">
+                    <div class="offer-img"><img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=400&auto=format&fit=crop" alt="Weekend brunch" loading="lazy" onload="this.classList.add('loaded')"></div>
+                    <div class="offer-body"><span class="eyebrow">Sat – Sun</span><h4>Weekend Café Special</h4><p>Slow mornings, good coffee and comforting food.</p><a class="offer-link" href="#menu">Order Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+                </div>
+                <div class="offer-card reveal">
+                    <div class="offer-img"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=400&auto=format&fit=crop" alt="Signature coffee" loading="lazy" onload="this.classList.add('loaded')"></div>
+                    <div class="offer-body"><span class="eyebrow">Signature</span><h4>Blue J Signature</h4><p>Discover some of Cafe Blue J's signature café favourites.</p><a class="offer-link" href="#menu">Order Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+                </div>
+                <div class="offer-card reveal">
+                    <div class="offer-img"><img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=400&auto=format&fit=crop" alt="Seasonal special" loading="lazy" onload="this.classList.add('loaded')"></div>
+                    <div class="offer-body"><span class="eyebrow">Limited</span><h4>Seasonal Special</h4><p>Fresh seasonal flavours, available for a limited time.</p><a class="offer-link" href="#menu">Order Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="section" id="about">
+        <div class="container about-grid">
+            <div class="about-img reveal-left">
+                <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=600&auto=format&fit=crop" alt="Cafe Blue J interior" loading="lazy" onload="this.classList.add('loaded')">
+                <div class="about-badge"><b>Est.</b><span>Mahim, Mumbai</span></div>
+            </div>
+            <div class="about-content reveal-right">
+                <span class="eyebrow">About Us</span>
+                <h2>A Cozy Corner for<br>Good Food &amp; Coffee</h2>
+                <p>Cafe Blue J is a neighbourhood café in Mahim, Mumbai, created for people who enjoy good coffee, freshly prepared food and relaxed café moments.</p>
+                <p>From your first coffee of the day to a long conversation over brunch, our menu brings together comforting favourites, handcrafted beverages and indulgent treats.</p>
+                <div class="highlights-inline">
+                    <div class="hl-item"><div class="hl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3l18 18M3 21L21 3"/></svg></div><span>Freshly Prepared</span></div>
+                    <div class="hl-item"><div class="hl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></div><span>Quality Ingredients</span></div>
+                    <div class="hl-item"><div class="hl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg></div><span>Crafted Coffee</span></div>
+                    <div class="hl-item"><div class="hl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 0 0 1 1h3m6 0h3a1 1 0 0 0 1-1V10"/></svg></div><span>Cozy Ambience</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MENU ===== -->
+    <section class="section menu-section" id="menu">
+        <div class="container">
+            <div class="section-head reveal">
+                <span class="eyebrow">The Menu</span>
+                <h2>Crafted for Every Café Moment</h2>
+                <p>Browse, add to cart and order straight to your table — from our first espresso to our last toast.</p>
+            </div>
+            <div class="menu-controls reveal">
+                <div class="menu-search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                    <input type="text" id="menuSearch" placeholder="Search coffee, burger, toast…">
+                </div>
+            </div>
+            <div class="cat-scroll reveal" id="catScroll"></div>
+            <div class="menu-grid" id="menuGrid" style="margin-top:36px;"></div>
+        </div>
+    </section>
+
+    <!-- ===== REVIEWS ===== -->
+    <section class="section" id="reviews">
+        <div class="container">
+            <div class="section-head center reveal">
+                <span class="eyebrow">Reviews</span>
+                <h2>Loved by Our Guests</h2>
+            </div>
+            <div class="review-wrap reveal">
+                <div class="review-track" id="reviewTrack">
+                    <div class="review-slide">
+                        <div class="stars">★★★★★</div>
+                        <p>"A beautiful café atmosphere with great coffee and comforting food."</p>
+                        <div class="review-who"><div class="review-avatar">V</div><b>Verified Guest</b><span>★★★★★</span></div>
+                    </div>
+                    <div class="review-slide">
+                        <div class="stars">★★★★★</div>
+                        <p>"A lovely place to slow down, enjoy a coffee and spend time with friends."</p>
+                        <div class="review-who"><div class="review-avatar">V</div><b>Verified Guest</b><span>★★★★★</span></div>
+                    </div>
+                    <div class="review-slide">
+                        <div class="stars">★★★★★</div>
+                        <p>"The menu has a great mix of coffee, breakfast and café favourites."</p>
+                        <div class="review-who"><div class="review-avatar">V</div><b>Verified Guest</b><span>★★★★★</span></div>
+                    </div>
+                </div>
+                <div class="review-nav">
+                    <div class="r-arrow" id="rPrev">‹</div>
+                    <div class="review-dots" id="reviewDots"></div>
+                    <div class="r-arrow" id="rNext">›</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== GALLERY ===== -->
+    <section class="section section-cream" id="gallery">
+        <div class="container">
+            <div class="section-head reveal">
+                <span class="eyebrow">Gallery</span>
+                <h2>Moments at Blue J</h2>
+            </div>
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </div>
+    </section>
+
+    <!-- ===== LIGHTBOX ===== -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lb-close" id="lbClose">✕</button>
+            <button class="lb-nav lb-prev" id="lbPrev">‹</button>
+            <img id="lbImg" src="" alt="">
+            <button class="lb-nav lb-next" id="lbNext">›</button>
+            <div class="lb-counter" id="lbCounter"></div>
+        </div>
+    </div>
+
+    <!-- ===== INSTAGRAM ===== -->
+    <section class="section">
+        <div class="container">
+            <div class="section-head center reveal">
+                <span class="eyebrow">@cafebluej</span>
+                <h2>Follow the Blue J Moments</h2>
+            </div>
+            <div class="insta-grid reveal" id="instaGrid"></div>
+            <div style="text-align:center;margin-top:40px;">
+                <a href="#" class="btn btn-outline dark" id="instaFollowBtn">Follow Us on Instagram
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== VISIT US ===== -->
+    <section class="section section-cream">
+        <div class="container visit-grid">
+            <div class="reveal-left">
+                <span class="eyebrow">Find Us</span>
+                <h2 style="font-size:36px;margin:14px 0 26px;">Come Visit Cafe Blue J</h2>
+                <div class="info-row">
+                    <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+                    <div><h5>Address</h5><p>Cafe Blue J, Shop 06, Devdarshan, Mogul Lane, Mahim, Mumbai</p></div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.34 1.79.65 2.65a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.43-1.27a2 2 0 0 1 2.11-.45c.86.31 1.75.53 2.65.65A2 2 0 0 1 22 16.92z"/></svg></div>
+                    <div><h5>Phone</h5><p>+91 91369 65899</p></div>
+                </div>
+                <div class="hours-table">
+                    <h5 style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:10px;font-weight:700;">Opening Hours</h5>
+                    <div class="hours-row"><span>Monday – Friday</span><b id="hrsWeek">8:00 AM – 11:00 PM</b></div>
+                    <div class="hours-row"><span>Saturday – Sunday</span><b id="hrsWeekend">8:00 AM – 12:00 AM</b></div>
+                    <p style="font-size:11.5px;color:#9aa5a8;margin-top:10px;">*Hours to be reconfirmed before launch.</p>
+                </div>
+                <a href="https://maps.google.com/?q=Devdarshan+Mogul+Lane+Mahim+Mumbai" target="_blank" class="btn btn-primary" style="margin-top:20px;">Get Directions
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+            </div>
+            <div class="map-box reveal-right">
+                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=600&auto=format&fit=crop" alt="Mahim Mumbai area" loading="lazy" onload="this.classList.add('loaded')">
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="section" id="contact">
+        <div class="container contact-wrap">
+            <div class="reveal-left">
+                <span class="eyebrow">Contact</span>
+                <h2 style="font-size:36px;margin:14px 0 20px;">Get in Touch</h2>
+                <p style="color:#4d5d62;line-height:1.7;font-size:15px;margin-bottom:30px;">Have a question, feedback or something you'd like to share? We'd love to hear from you.</p>
+                <div class="info-row"><div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.34 1.79.65 2.65a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.43-1.27a2 2 0 0 1 2.11-.45c.86.31 1.75.53 2.65.65A2 2 0 0 1 22 16.92z"/></svg></div><div><h5>Phone</h5><p>+91 91369 65899</p></div></div>
+                <div class="info-row"><div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><h5>Location</h5><p>Mogul Lane, Mahim, Mumbai</p></div></div>
+                <div class="info-row"><div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></div><div><h5>Instagram</h5><p>@cafebluej</p></div></div>
+            </div>
+            <div class="contact-form reveal-right stagger" id="contactFormWrapper">
+                <div class="field reveal"><label>Name</label><input type="text" id="contactName" placeholder="Your name"></div>
+                <div class="field reveal"><label>Phone</label><input type="tel" id="contactPhone" placeholder="Your phone number"></div>
+                <div class="field reveal"><label>Email</label><input type="email" id="contactEmail" placeholder="you@email.com"></div>
+                <div class="field reveal"><label>Message</label><textarea id="contactMsg" placeholder="Tell us how we can help…"></textarea></div>
+                <button type="button" class="btn btn-primary reveal" style="align-self:flex-start;" id="sendMsgBtn">Send Message
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </button>
+                <div class="contact-success" id="contactSuccess">
+                    <div class="check-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
+                    <h4>Message Sent</h4>
+                    <p>Thank you for reaching out. We'll get back to you soon.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">
+                        <img src="logo.png" alt="Cafe Blue J">
+                        <span class="logo-text">Cafe <span class="blue">Blue J</span></span>
+                    </div>
+                    <p>A warm café in Mahim, Mumbai, bringing together freshly prepared food, crafted coffee and relaxed moments.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Explore</h5>
+                    <ul><li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#menu">Menu</a></li><li><a href="#offers">Offers</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#contact">Contact</a></li></ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Order</h5>
+                    <ul><li><a href="#menu">Order Now</a></li><li><a href="#menu">View Menu</a></li><li><a href="#" id="footInsta">Instagram</a></li><li><a href="tel:+919136965899">+91 91369 65899</a></li></ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Visit</h5>
+                    <ul><li>Shop 06, Devdarshan,</li><li>Mogul Lane, Mahim,</li><li>Mumbai</li><li style="margin-top:10px;">Mon–Fri: 8AM – 11PM</li><li>Sat–Sun: 8AM – 12AM</li></ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 Cafe Blue J. All rights reserved.</span>
+                <span>Bond over coffee.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== CART DRAWER ===== -->
+    <div class="overlay" id="overlay"></div>
+    <div class="drawer" id="cartDrawer">
+        <div class="drawer-head">
+            <h3>Your Cart</h3>
+            <div class="drawer-close" id="drawerClose">✕</div>
+        </div>
+        <div class="drawer-body" id="cartBody"></div>
+        <div class="drawer-foot" id="cartFoot"></div>
+    </div>
+
+    <!-- ===== CHECKOUT MODAL ===== -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-card">
+            <div class="modal-close" id="modalClose">✕</div>
+            <div class="step-progress"><span id="p1"><i></i></span><span id="p2"><i></i></span><span id="p3"><i></i></span><span id="p4"><i></i></span></div>
+            <div id="modalStepContent"></div>
+        </div>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        /* ============================================================
+           CONFIG
+           ============================================================ */
+        const CONFIG = {
+            taxRate: 0.05,
+            serviceRate: 0.07,
+            hours: {
+                week: '8:00 AM – 11:00 PM',
+                weekend: '8:00 AM – 12:00 AM'
+            },
+            instagramUrl: 'https://instagram.com/cafebluej',
+            googleMapsUrl: 'https://maps.google.com/?q=Devdarshan+Mogul+Lane+Mahim+Mumbai',
+            phone: '+91 91369 65899'
+        };
+
+        /* ============================================================
+           MENU DATA
+           ============================================================ */
+        const MENU = [
+            { cat: "Hot Coffee", items: [{ n: "Espresso", p: 180, d: "Double shot of medium dark roast, served with sparkling water" },
+                    { n: "Americano", p: 200, d: "Double espresso with hot water" },
+                    { n: "Cappuccino", p: 230, d: "Double espresso with textured milk" },
+                    { n: "Latte", p: 230, d: "Double espresso with textured milk" },
+                    { n: "Café Mocha", p: 260, d: "Double espresso, chocolate syrup, textured milk" },
+                    { n: "Piccolo", p: 180, d: "Single espresso with 60ml textured milk" },
+                    { n: "Cortado", p: 220, d: "Double espresso with 60ml textured milk" },
+                    { n: "Flat White", p: 240, d: "Ristretto with textured milk" },
+                    { n: "Hazelnut Cappuccino", p: 300, d: "Double espresso with textured milk, hazelnut" },
+                    { n: "Hazelnut Latte", p: 300, d: "Double espresso with textured milk, hazelnut" },
+                    { n: "Cinnamon Latte", p: 240, d: "Double espresso with textured milk, cinnamon" },
+                    { n: "Filter Coffee", p: 230, d: "Double espresso, steamed milk" },
+                    { n: "Hot Chocolate", p: 340, d: "54.5% dark couverture chocolate" },
+                    { n: "Hot Chocolate with Marshmallow", p: 380, d: "" },
+                    { n: "Hot Chocolate with Strawberry", p: 380, d: "" }
+                ] },
+            { cat: "Iced Coffee", items: [{ n: "Iced Americano", p: 200, d: "Double espresso over chilled water" },
+                    { n: "Iced Cortado", p: 240, d: "Equal amount of espresso & chilled milk" },
+                    { n: "Iced Cappuccino", p: 280, d: "Unsweetened double espresso, chilled milk" },
+                    { n: "Iced Latte", p: 280, d: "Unsweetened double espresso, chilled milk" },
+                    { n: "Iced Mocha", p: 300, d: "Double espresso, chocolate syrup & chilled milk" },
+                    { n: "Blue J Cold Coffee", p: 320, d: "Triple shot of espresso, chilled milk" },
+                    { n: "Bon Bon Iced Coffee", p: 320, d: "Double espresso, condensed milk" },
+                    { n: "Vietnamese Cold Brew", p: 340, d: "Cold brew & condensed milk" },
+                    { n: "Tiramisu Latte", p: 350, d: "Double espresso, chilled milk, mascarpone cheese & lady finger cookie" },
+                    { n: "Cold Brew", p: 300, d: "" }
+                ] },
+            { cat: "Iced Tea", items: [{ n: "Orange Iced Tea", p: 240, d: "" },
+                    { n: "Hibiscus & Rose Iced Tea", p: 240, d: "" },
+                    { n: "Green Apple Iced Tea", p: 240, d: "" },
+                    { n: "Lemon Iced Tea", p: 240, d: "" },
+                    { n: "Honey Matcha Iced Latte", p: 420, d: "" },
+                    { n: "Strawberry Iced Matcha", p: 450, d: "" },
+                    { n: "Mango Iced Matcha", p: 450, d: "" }
+                ] },
+            { cat: "Hot Tea", items: [{ n: "Green Tea", p: 200, d: "" },
+                    { n: "Hibiscus & Rose Tea", p: 220, d: "" },
+                    { n: "Black Tea", p: 200, d: "" },
+                    { n: "Matcha Latte", p: 360, d: "" },
+                    { n: "Honey Matcha Latte", p: 380, d: "" },
+                    { n: "Honey Lemon Ginger Tea", p: 220, d: "" }
+                ] },
+            { cat: "Soup", items: [{ n: "Tomato Basil", p: 250, d: "" },
+                    { n: "Lemon Coriander", p: 250, d: "" }
+                ] },
+            { cat: "Toast", items: [{ n: "Avocado Toast", p: 480, d: "Sliced avocado/guacamole on sourdough, feta cheese, choice of spread" },
+                    { n: "Avocado Toast with Poached Egg", p: 560, d: "Sliced avocado/guacamole, feta, poached egg, choice of spread" },
+                    { n: "Avocado Toast with Sunny Side", p: 520, d: "Sliced avocado/guacamole, feta, sunny side egg, choice of spread" },
+                    { n: "Mushroom Toast", p: 320, d: "Smoky BBQ mushroom, sun-dried tomato on sourdough" },
+                    { n: "Chicken Toast", p: 350, d: "Spicy Indian-style chicken on sourdough" },
+                    { n: "Open Egg Toast", p: 260, d: "Boiled eggs, tomato, onion, jalapeno, cilantro on sourdough" },
+                    { n: "Mix Veg Toast", p: 250, d: "Spicy Indian-style mixed veggies on sourdough" }
+                ] },
+            { cat: "Croissant Sandwich", items: [{ n: "Jamaican Chicken Croissant", p: 350,
+                        d: "Bell peppers, onion, chicken, garlic mayo & cheese" },
+                    { n: "Grilled Vegetable Croissant", p: 300, d: "Bell peppers, broccoli, mushroom, honey mustard basil mayo & cheese" },
+                    { n: "Creamy Mushroom Croissant", p: 320, d: "Bell pepper, mushroom filling, lemon thyme spread & cheese" },
+                    { n: "Ham & Cheese Croissant", p: 400, d: "Cucumber, jalapeno, spicy mayo, sunny side egg, chicken ham & cheese" }
+                ] },
+            { cat: "French Toast", items: [{ n: "Classic Cinnamon Honey", p: 220, d: "Pan-fried egg-dipped thick bread" },
+                    { n: "Mango (Seasonal)", p: 260, d: "Pan-fried egg-dipped thick bread" },
+                    { n: "Nutella", p: 250, d: "Pan-fried egg-dipped thick bread" },
+                    { n: "Strawberry (Seasonal)", p: 260, d: "Pan-fried egg-dipped thick bread" }
+                ] },
+            { cat: "Eggs", items: [{ n: "Bhuri", p: 230, d: "Spicy Indian well-done scrambled eggs" },
+                    { n: "Scrambled Eggs", p: 220, d: "" },
+                    { n: "Turkish Eggs", p: 400, d: "Poached eggs with garlic-infused curd, smoky chilli butter & bread" },
+                    { n: "Egg Benedict", p: 380, d: "Buns with sautéed spinach, chicken ham, poached eggs & hollandaise" },
+                    { n: "Sunny Side Omelette", p: 250, d: "Sunny side egg with a slice of bread" }
+                ] },
+            { cat: "Omelette", items: [{ n: "Masala Omelette", p: 250, d: "French/Welldone, served with bread" },
+                    { n: "Spinach & Cheese Omelette", p: 260, d: "French/Welldone, served with bread" },
+                    { n: "Jalapeno & Cheese Omelette", p: 300, d: "French/Welldone, served with bread" },
+                    { n: "Chicken & Cheese Omelette", p: 340, d: "French/Welldone, served with bread" },
+                    { n: "Mushroom & Cheese Omelette", p: 320, d: "French/Welldone, served with bread" }
+                ] },
+            { cat: "Burgers", items: [{ n: "Avocado Burger", p: 460, d: "Avocado guacamole, vegan cashew spread, lettuce, tomato, cucumber & sprouts" },
+                    { n: "Veg Burger", p: 260, d: "Handmade veg potato patty, mayo, lettuce, tomato, pickled onion & cheese" },
+                    { n: "Chicken Keema Burger", p: 300, d: "Handmade minced chicken patty, mayo, lettuce, tomato, pickled onion & cheese" },
+                    { n: "Barbeque Cottage Cheese Burger", p: 300,
+                        d: "Cottage cheese steak in BBQ sauce, mayo, lettuce, jalapenos, fried onions" },
+                    { n: "Tangy Chicken Burger", p: 340, d: "Grilled chicken in tangy orange-tomato sauce, mayo, lettuce, jalapeno & cheese" },
+                    { n: "Scrambled Egg Burger", p: 280, d: "Scrambled eggs, cheese, basil pesto, spinach, tomato & Dijon mustard" },
+                    { n: "Hot & Crispy Chicken Burger", p: 320, d: "Crispy fried chicken, caramelized onion, spicy mayo & cheese" }
+                ] }
+        ];
+
+        /* ============================================================
+           IMAGE MAPPING
+           ============================================================ */
+        const CAT_IMG = {
+            "Hot Coffee": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=400&auto=format&fit=crop",
+            "Iced Coffee": "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=400&auto=format&fit=crop",
+            "Iced Tea": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?q=80&w=400&auto=format&fit=crop",
+            "Hot Tea": "https://images.unsplash.com/photo-1556881286-fc6915169721?q=80&w=400&auto=format&fit=crop",
+            "Soup": "https://images.unsplash.com/photo-1547592166-23ac45744acd?q=80&w=400&auto=format&fit=crop",
+            "Toast": "https://images.unsplash.com/photo-1588137378633-dea1336ce1e2?q=80&w=400&auto=format&fit=crop",
+            "Croissant Sandwich": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=400&auto=format&fit=crop",
+            "French Toast": "https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=400&auto=format&fit=crop",
+            "Eggs": "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=400&auto=format&fit=crop",
+            "Omelette": "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=400&auto=format&fit=crop",
+            "Burgers": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=400&auto=format&fit=crop"
+        };
+
+        function getItemImg(cat, name) {
+            const overrides = {
+                "Avocado Toast": "https://images.unsplash.com/photo-1588137378633-dea1336ce1e2?q=80&w=400&auto=format&fit=crop",
+                "Espresso": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=400&auto=format&fit=crop",
+                "Cappuccino": "https://images.unsplash.com/photo-1534687941688-650cca1f3c3b?q=80&w=400&auto=format&fit=crop",
+                "Latte": "https://images.unsplash.com/photo-1551030173-122a8b5088c5?q=80&w=400&auto=format&fit=crop",
+                "Egg Benedict": "https://images.unsplash.com/photo-1608039829572-78524f79c4c7?q=80&w=400&auto=format&fit=crop",
+                "Veg Burger": "https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=400&auto=format&fit=crop",
+                "Hot Chocolate": "https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?q=80&w=400&auto=format&fit=crop",
+                "Matcha Latte": "https://images.unsplash.com/photo-1556881286-fc6915169721?q=80&w=400&auto=format&fit=crop"
+            };
+            if (overrides[name]) return overrides[name];
+            return CAT_IMG[cat] || "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=400&auto=format&fit=crop";
+        }
+
+        /* ============================================================
+           STATE
+           ============================================================ */
+        let cart = {};
+        let currentCat = "All";
+        let searchTerm = "";
+
+        /* ============================================================
+           NAV
+           ============================================================ */
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
+        });
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+        document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove(
+            'open')));
+
+        const sections = ['home', 'about', 'menu', 'offers', 'reviews', 'gallery', 'contact'];
+        const navA = document.querySelectorAll('.nav-links a');
+        window.addEventListener('scroll', () => {
+            let cur = 'home';
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && window.scrollY >= el.offsetTop - 140) cur = id;
+            });
+            navA.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+        });
+
+        /* ============================================================
+           HERO LOAD — fast fade-in
+           ============================================================ */
+        window.addEventListener('load', () => {
+            document.querySelector('.hero').classList.add('loaded');
+        });
+        // fallback: if image loads slowly, still show after 2s
+        setTimeout(() => {
+            document.querySelector('.hero').classList.add('loaded');
+        }, 800);
+
+        /* ============================================================
+           SCROLL REVEAL
+           ============================================================ */
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); } });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => io.observe(el));
+
+        /* ============================================================
+           PROMO SLIDER
+           ============================================================ */
+        (function() {
+            const track = document.getElementById('sliderTrack');
+            const slides = track.children.length;
+            const dotsWrap = document.getElementById('sliderDots');
+            let idx = 0;
+            for (let i = 0; i < slides; i++) { const d = document.createElement('div');
+                d.className = 's-dot' + (i === 0 ? ' active' : '');
+                d.addEventListener('click', () => go(i));
+                dotsWrap.appendChild(d); }
+
+            function go(i) { idx = (i + slides) % slides;
+                track.style.transform = `translateX(-${idx*100}%)`;
+                [...dotsWrap.children].forEach((d, j) => d.classList.toggle('active', j === idx)); }
+            document.getElementById('sPrev').addEventListener('click', () => go(idx - 1));
+            document.getElementById('sNext').addEventListener('click', () => go(idx + 1));
+            setInterval(() => go(idx + 1), 5500);
+        })();
+
+        /* ============================================================
+           REVIEWS CAROUSEL
+           ============================================================ */
+        (function() {
+            const track = document.getElementById('reviewTrack');
+            const n = track.children.length;
+            const dotsWrap = document.getElementById('reviewDots');
+            let idx = 0;
+            for (let i = 0; i < n; i++) { const d = document.createElement('div');
+                d.className = 'r-dot' + (i === 0 ? ' active' : '');
+                d.addEventListener('click', () => go(i));
+                dotsWrap.appendChild(d); }
+
+            function go(i) { idx = (i + n) % n;
+                track.style.transform = `translateX(-${idx*100}%)`;
+                [...dotsWrap.children].forEach((d, j) => d.classList.toggle('active', j === idx)); }
+            document.getElementById('rPrev').addEventListener('click', () => go(idx - 1));
+            document.getElementById('rNext').addEventListener('click', () => go(idx + 1));
+            setInterval(() => go(idx + 1), 6000);
+        })();
+
+        /* ============================================================
+           GALLERY
+           ============================================================ */
+        const GALLERY_DATA = [
+            { url: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=400&auto=format&fit=crop", label: "Coffee" },
+            { url: "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?q=80&w=400&auto=format&fit=crop", label: "Food" },
+            { url: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=400&auto=format&fit=crop", label: "Café Interior" },
+            { url: "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=400&auto=format&fit=crop", label: "Desserts" },
+            { url: "https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=400&auto=format&fit=crop", label: "Ambience" },
+            { url: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=400&auto=format&fit=crop", label: "Café Moments" },
+            { url: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=400&auto=format&fit=crop", label: "Coffee" },
+            { url: "https://images.unsplash.com/photo-1484723091739-30a097e8f929?q=80&w=400&auto=format&fit=crop", label: "Food" },
+            { url: "https://images.unsplash.com/photo-1556881286-fc6915169721?q=80&w=400&auto=format&fit=crop", label: "Tea" },
+            { url: "https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=400&auto=format&fit=crop", label: "French Toast" },
+            { url: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=400&auto=format&fit=crop", label: "Burgers" },
+            { url: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?q=80&w=400&auto=format&fit=crop", label: "Café Escape" }
+        ];
+
+        const galleryGrid = document.getElementById('galleryGrid');
+        GALLERY_DATA.forEach((item, idx) => {
+            const d = document.createElement('div');
+            d.className = 'g-item';
+            d.innerHTML =
+                `<img src="${item.url}" loading="lazy" alt="${item.label}" onload="this.classList.add('loaded')"><div class="g-overlay"><span>${item.label}</span></div>`;
+            d.addEventListener('click', () => openLightbox(idx));
+            galleryGrid.appendChild(d);
+        });
+
+        /* ============================================================
+           LIGHTBOX
+           ============================================================ */
+        let lbIndex = 0;
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lbImg');
+        const lbCounter = document.getElementById('lbCounter');
+
+        function openLightbox(index) {
+            lbIndex = index;
+            updateLb();
+            lb.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lb.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function updateLb() {
+            const d = GALLERY_DATA[lbIndex];
+            lbImg.src = d.url;
+            lbImg.alt = d.label;
+            lbCounter.textContent = `${lbIndex+1} / ${GALLERY_DATA.length}`;
+        }
+
+        document.getElementById('lbClose').addEventListener('click', closeLightbox);
+        document.getElementById('lbPrev').addEventListener('click', () => { lbIndex = (lbIndex - 1 + GALLERY_DATA.length) %
+                GALLERY_DATA.length;
+            updateLb(); });
+        document.getElementById('lbNext').addEventListener('click', () => { lbIndex = (lbIndex + 1) % GALLERY_DATA.length;
+            updateLb(); });
+        lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
+        document.addEventListener('keydown', (e) => {
+            if (!lb.classList.contains('open')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') { lbIndex = (lbIndex - 1 + GALLERY_DATA.length) % GALLERY_DATA.length;
+                updateLb(); }
+            if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % GALLERY_DATA.length;
+                updateLb(); }
+        });
+
+        let touchStartX = 0;
+        lb.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+        lb.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) { lbIndex = (lbIndex + 1) % GALLERY_DATA.length;
+                    updateLb(); } else { lbIndex = (lbIndex - 1 + GALLERY_DATA.length) % GALLERY_DATA.length;
+                    updateLb(); }
+            }
+        });
+
+        /* ============================================================
+           INSTAGRAM
+           ============================================================ */
+        const INSTA_DATA = [
+            "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=400&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1484723091739-30a097e8f929?q=80&w=400&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=400&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=400&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=400&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=400&auto=format&fit=crop"
+        ];
+        const instaGrid = document.getElementById('instaGrid');
+        INSTA_DATA.forEach(url => {
+            const d = document.createElement('div');
+            d.className = 'insta-item';
+            d.innerHTML =
+                `<img src="${url}" loading="lazy" onload="this.classList.add('loaded')"><div class="insta-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></div>`;
+            d.addEventListener('click', () => window.open(CONFIG.instagramUrl, '_blank'));
+            instaGrid.appendChild(d);
+        });
+
+        document.getElementById('instaFollowBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.open(CONFIG.instagramUrl, '_blank');
+        });
+
+        /* ============================================================
+           MENU RENDER
+           ============================================================ */
+        const catScroll = document.getElementById('catScroll');
+        const cats = ["All", ...MENU.map(c => c.cat)];
+        cats.forEach(c => {
+            const b = document.createElement('button');
+            b.className = 'cat-pill' + (c === 'All' ? ' active' : '');
+            b.textContent = c;
+            b.addEventListener('click', () => {
+                currentCat = c;
+                document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+                b.classList.add('active');
+                renderMenu();
+            });
+            catScroll.appendChild(b);
+        });
+
+        document.getElementById('menuSearch').addEventListener('input', (e) => {
+            searchTerm = e.target.value.toLowerCase();
+            renderMenu();
+        });
+
+        function itemKey(cat, name) { return cat + '|' + name; }
+
+        function renderMenu() {
+            const grid = document.getElementById('menuGrid');
+            grid.innerHTML = '';
+            let any = false;
+            MENU.forEach(section => {
+                if (currentCat !== 'All' && section.cat !== currentCat) return;
+                section.items.forEach(it => {
+                    if (searchTerm && !it.n.toLowerCase().includes(searchTerm) && !it.d.toLowerCase()
+                        .includes(searchTerm)) return;
+                    any = true;
+                    const key = itemKey(section.cat, it.n);
+                    const qty = cart[key] ? cart[key].qty : 0;
+                    const img = getItemImg(section.cat, it.n);
+                    const card = document.createElement('div');
+                    card.className = 'menu-card';
+                    card.innerHTML = `
+                    <div class="mc-img"><img src="${img}" loading="lazy" alt="${it.n}" onload="this.classList.add('loaded')"></div>
+                    <div class="mc-body">
+                      <div class="mc-top"><h4>${it.n}</h4><div class="mc-price">₹${it.p}</div></div>
+                      <p>${it.d || 'A Blue J favourite.'}</p>
+                      <div class="mc-bottom">
+                        <span class="mc-cat-tag">${section.cat}</span>
+                        <div class="mc-action" data-key="${key}"></div>
+                      </div>
+                    </div>`;
+                    grid.appendChild(card);
+                    requestAnimationFrame(() => card.classList.add('show'));
+                    renderCardAction(card.querySelector('.mc-action'), section.cat, it);
+                });
+            });
+            if (!any) { grid.innerHTML =
+                '<div class="menu-empty">No items match your search. Try another keyword.</div>'; }
+        }
+
+        function renderCardAction(el, cat, it) {
+            const key = itemKey(cat, it.n);
+            const qty = cart[key] ? cart[key].qty : 0;
+            if (qty > 0) {
+                el.innerHTML =
+                    `<div class="qty-row"><button class="dec">−</button><span class="qn">${qty}</span><button class="inc">+</button></div>`;
+                el.querySelector('.inc').addEventListener('click', () => { changeQty(cat, it, 1); });
+                el.querySelector('.dec').addEventListener('click', () => { changeQty(cat, it, -1); });
+            } else {
+                el.innerHTML = `<button class="add-btn">Add to Cart</button>`;
+                el.querySelector('.add-btn').addEventListener('click', (e) => {
+                    changeQty(cat, it, 1);
+                    e.target.classList.add('added');
+                    showToast(it.n + ' added to cart');
+                });
+            }
+        }
+
+        function changeQty(cat, it, delta) {
+            const key = itemKey(cat, it.n);
+            if (!cart[key]) cart[key] = { n: it.n, p: it.p, cat: cat, qty: 0 };
+            cart[key].qty += delta;
+            if (cart[key].qty <= 0) delete cart[key];
+            updateCartCount();
+            renderMenu();
+            renderCart();
+        }
+
+        /* ============================================================
+           CART
+           ============================================================ */
+        const cartCountEl = document.getElementById('cartCount');
+
+        function updateCartCount() {
+            const n = Object.values(cart).reduce((s, i) => s + i.qty, 0);
+            cartCountEl.textContent = n;
+        }
+
+        function cartSubtotal() { return Object.values(cart).reduce((s, i) => s + i.p * i.qty, 0); }
+
+        function calcTax(sub) { return Math.round(sub * CONFIG.taxRate); }
+
+        function calcService(sub) { return Math.round(sub * CONFIG.serviceRate); }
+
+        function calcTotal(sub) { return sub + calcTax(sub) + calcService(sub); }
+
+        const overlay = document.getElementById('overlay');
+        const drawer = document.getElementById('cartDrawer');
+
+        function openCart() { drawer.classList.add('open');
+            overlay.classList.add('open');
+            renderCart(); }
+
+        function closeCart() { drawer.classList.remove('open');
+            overlay.classList.remove('open'); }
+        document.getElementById('cartOpenBtn').addEventListener('click', openCart);
+        document.getElementById('drawerClose').addEventListener('click', closeCart);
+        overlay.addEventListener('click', () => { closeCart();
+            closeModal(); });
+
+        function renderCart() {
+            const body = document.getElementById('cartBody');
+            const foot = document.getElementById('cartFoot');
+            const items = Object.values(cart);
+            if (items.length === 0) {
+                body.innerHTML =
+                    `<div class="cart-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><p>Your cart is empty.<br>Add something delicious from the menu.</p></div>`;
+                foot.innerHTML = '';
+                return;
+            }
+            body.innerHTML = items.map(i => {
+                const key = itemKey(i.cat, i.n);
+                const img = getItemImg(i.cat, i.n);
+                return `<div class="cart-item">
+                  <div class="ci-thumb"><img src="${img}" alt="${i.n}" loading="lazy"></div>
+                  <div class="ci-info">
+                    <h5>${i.n}</h5>
+                    <div class="ci-price">₹${i.p} each</div>
+                    <div class="ci-controls">
+                      <div class="ci-qty"><button class="ci-dec" data-key="${key}">−</button><span class="qn">${i.qty}</span><button class="ci-inc" data-key="${key}">+</button></div>
+                      <button class="ci-remove" data-key="${key}">Remove</button>
+                      <div class="ci-sub">₹${i.p*i.qty}</div>
+                    </div>
+                  </div>
+                </div>`;
+            }).join('');
+
+            body.querySelectorAll('.ci-inc').forEach(b => b.addEventListener('click', () => {
+                const [cat, n] = b.dataset.key.split('|');
+                const item = findItem(cat, n);
+                if (item) { changeQty(cat, item, 1); }
+            }));
+            body.querySelectorAll('.ci-dec').forEach(b => b.addEventListener('click', () => {
+                const [cat, n] = b.dataset.key.split('|');
+                const item = findItem(cat, n);
+                if (item) { changeQty(cat, item, -1); }
+            }));
+            body.querySelectorAll('.ci-remove').forEach(b => b.addEventListener('click', () => {
+                delete cart[b.dataset.key];
+                updateCartCount();
+                renderMenu();
+                renderCart();
+            }));
+
+            const sub = cartSubtotal();
+            const tax = calcTax(sub);
+            const svc = calcService(sub);
+            const total = sub + tax + svc;
+            foot.innerHTML = `
+                <div class="bill-row"><span>Subtotal</span><span>₹${sub}</span></div>
+                <div class="bill-row"><span>GST (${Math.round(CONFIG.taxRate*100)}%)</span><span>₹${tax}</span></div>
+                <div class="bill-row"><span>Service Charge (${Math.round(CONFIG.serviceRate*100)}%)</span><span>₹${svc}</span></div>
+                <div class="bill-row total"><span>Total</span><span>₹${total}</span></div>
+                <button class="btn btn-primary" id="checkoutBtn">Proceed to Checkout</button>`;
+            document.getElementById('checkoutBtn').addEventListener('click', () => { closeCart();
+                openModal(); });
+        }
+
+        function findItem(cat, name) {
+            for (const s of MENU) {
+                if (s.cat !== cat) continue;
+                for (const it of s.items) {
+                    if (it.n === name) return it;
+                }
+            }
+            return null;
+        }
+
+        /* ============================================================
+           CHECKOUT MODAL
+           ============================================================ */
+        const checkoutModal = document.getElementById('checkoutModal');
+        const modalStepContent = document.getElementById('modalStepContent');
+        let step = 1;
+        let order = { name: '', mobile: '', table: null, payment: null, notes: '' };
+
+        function openModal() {
+            if (Object.keys(cart).length === 0) { showToast('Your cart is empty'); return; }
+            step = 1;
+            checkoutModal.classList.add('open');
+            overlay.classList.add('open');
+            renderStep();
+        }
+
+        function closeModal() {
+            checkoutModal.classList.remove('open');
+            overlay.classList.remove('open');
+        }
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        document.getElementById('orderNowBtn').addEventListener('click', () => {
+            if (Object.keys(cart).length > 0) { setTimeout(openModal, 300); } else { showToast(
+                    'Add items to your cart first'); }
+        });
+
+        function updateProgress() {
+            for (let i = 1; i <= 4; i++) { document.getElementById('p' + i).classList.toggle('done', i <= step); }
+        }
+
+        function renderStep() {
+            updateProgress();
+            if (step === 1) return stepDetails();
+            if (step === 2) return stepTable();
+            if (step === 3) return stepPayment();
+            if (step === 4) return stepSummary();
+        }
+
+        function stepDetails() {
+            modalStepContent.innerHTML = `
+                <span class="eyebrow">Step 1 of 4</span>
+                <h3>Your Details</h3>
+                <p class="modal-sub">Let us know who's ordering.</p>
+                <div class="field" style="margin-bottom:16px;"><label>Full Name</label><input type="text" id="inpName" placeholder="Enter your name" value="${order.name}"></div>
+                <div class="field" style="margin-bottom:16px;"><label>Mobile Number</label><input type="tel" id="inpMobile" placeholder="10-digit mobile number" value="${order.mobile}"></div>
+                <div class="field"><label>Special Instructions (optional)</label><textarea id="inpNotes" placeholder="Any preferences, allergies…">${order.notes}</textarea></div>
+                <div class="modal-nav"><button class="btn btn-primary" id="nextBtn" style="width:100%;">Continue</button></div>`;
+            document.getElementById('nextBtn').addEventListener('click', () => {
+                order.name = document.getElementById('inpName').value.trim();
+                order.mobile = document.getElementById('inpMobile').value.trim();
+                order.notes = document.getElementById('inpNotes').value.trim();
+                if (!order.name || order.mobile.length < 10) { showToast(
+                        'Please enter name & valid mobile number'); return; }
+                step = 2;
+                renderStep();
+            });
+        }
+
+        function stepTable() {
+            const tables = [1, 2, 3, 4, 5, 6];
+            modalStepContent.innerHTML = `
+                <span class="eyebrow">Step 2 of 4</span>
+                <h3>Select Your Table</h3>
+                <p class="modal-sub">Where are you seated?</p>
+                <div class="tables-grid">${tables.map(t => `
+                  <div class="table-card ${order.table===t?'selected':''}" data-t="${t}">
+                    <div class="check-badge">✓</div>
+                    <b>${t<10?'0'+t:t}</b><span>Table</span>
+                  </div>`).join('')}</div>
+                <div class="modal-nav"><button class="btn btn-ghost" id="backBtn">Back</button><button class="btn btn-primary" id="nextBtn">Continue</button></div>`;
+            modalStepContent.querySelectorAll('.table-card').forEach(c => c.addEventListener('click', () => {
+                order.table = parseInt(c.dataset.t);
+                modalStepContent.querySelectorAll('.table-card').forEach(x => x.classList.remove('selected'));
+                c.classList.add('selected');
+            }));
+            document.getElementById('backBtn').addEventListener('click', () => { step = 1;
+                renderStep(); });
+            document.getElementById('nextBtn').addEventListener('click', () => {
+                if (!order.table) { showToast('Please select a table number'); return; }
+                step = 3;
+                renderStep();
+            });
+        }
+
+        function stepPayment() {
+            modalStepContent.innerHTML = `
+                <span class="eyebrow">Step 3 of 4</span>
+                <h3>Payment Method</h3>
+                <p class="modal-sub">Choose how you'd like to pay.</p>
+                <div class="pay-grid">
+                  <div class="pay-card ${order.payment==='Cash'?'selected':''}" data-p="Cash">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>
+                    <b>Cash</b>
+                  </div>
+                  <div class="pay-card ${order.payment==='GPay / UPI'?'selected':''}" data-p="GPay / UPI">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+                    <b>GPay / UPI</b>
+                  </div>
+                </div>
+                <div class="modal-nav"><button class="btn btn-ghost" id="backBtn">Back</button><button class="btn btn-primary" id="nextBtn">Continue</button></div>`;
+            modalStepContent.querySelectorAll('.pay-card').forEach(c => c.addEventListener('click', () => {
+                order.payment = c.dataset.p;
+                modalStepContent.querySelectorAll('.pay-card').forEach(x => x.classList.remove('selected'));
+                c.classList.add('selected');
+            }));
+            document.getElementById('backBtn').addEventListener('click', () => { step = 2;
+                renderStep(); });
+            document.getElementById('nextBtn').addEventListener('click', () => {
+                if (!order.payment) { showToast('Please select a payment method'); return; }
+                step = 4;
+                renderStep();
+            });
+        }
+
+        function stepSummary() {
+            const items = Object.values(cart);
+            const sub = cartSubtotal();
+            const tax = calcTax(sub);
+            const svc = calcService(sub);
+            const total = sub + tax + svc;
+            modalStepContent.innerHTML = `
+                <span class="eyebrow">Step 4 of 4</span>
+                <h3>Review Your Order</h3>
+                <p class="modal-sub">Please confirm everything looks right.</p>
+                <div class="summary-block"><h5>Customer</h5><p>${order.name} · ${order.mobile}</p></div>
+                <div class="summary-block"><h5>Table</h5><p>Table ${order.table<10?'0'+order.table:order.table}</p></div>
+                <div class="summary-block"><h5>Order</h5>${items.map(i => `<div class="summary-item-row"><span>${i.n} × ${i.qty}</span><span>₹${i.p*i.qty}</span></div>`).join('')}</div>
+                <div class="summary-block"><h5>Bill</h5>
+                  <div class="summary-item-row"><span>Subtotal</span><span>₹${sub}</span></div>
+                  <div class="summary-item-row"><span>GST (${Math.round(CONFIG.taxRate*100)}%)</span><span>₹${tax}</span></div>
+                  <div class="summary-item-row"><span>Service Charge (${Math.round(CONFIG.serviceRate*100)}%)</span><span>₹${svc}</span></div>
+                  <div class="summary-item-row" style="font-weight:700;color:var(--charcoal);padding-top:8px;border-top:1px solid #eee1d3;margin-top:6px;"><span>Grand Total</span><span>₹${total}</span></div>
+                </div>
+                <div class="summary-block"><h5>Payment</h5><p>${order.payment}</p></div>
+                <div class="modal-nav"><button class="btn btn-ghost" id="backBtn">Back</button><button class="btn btn-primary" id="confirmBtn">Confirm Order</button></div>`;
+            document.getElementById('backBtn').addEventListener('click', () => { step = 3;
+                renderStep(); });
+            document.getElementById('confirmBtn').addEventListener('click', confirmOrder);
+        }
+
+        function confirmOrder() {
+            const items = Object.values(cart);
+            const sub = cartSubtotal();
+            const tax = calcTax(sub);
+            const svc = calcService(sub);
+            const total = sub + tax + svc;
+            const orderId = '#CBJ' + Math.floor(1000 + Math.random() * 9000);
+            const now = new Date();
+            const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const date = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+
+            const orderData = {
+                orderId: orderId,
+                customerName: order.name,
+                mobile: order.mobile,
+                tableNumber: order.table,
+                paymentMethod: order.payment,
+                notes: order.notes || '',
+                items: items.map(i => ({ name: i.n, category: i.cat, quantity: i.qty, price: i.p, total: i.p * i
+                        .qty })),
+                subtotal: sub,
+                tax: tax,
+                taxRate: CONFIG.taxRate,
+                serviceCharge: svc,
+                serviceRate: CONFIG.serviceRate,
+                total: total,
+                orderTime: time,
+                orderDate: date
+            };
+
+            console.log('📦 Order Data (ready for backend):', JSON.stringify(orderData, null, 2));
+
+            modalStepContent.innerHTML = `
+                <div class="confirm-wrap">
+                  <div class="check-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
+                  <h3>Order Confirmed!</h3>
+                  <div class="confirm-id">${orderId}</div>
+                  <p style="color:#6d7c81;font-size:14px;">Thank you for choosing Cafe Blue J. Your order has been received.</p>
+                  <div class="confirm-details">
+                    <div class="dr"><span>Customer</span><b>${order.name}</b></div>
+                    <div class="dr"><span>Mobile</span><b>${order.mobile}</b></div>
+                    <div class="dr"><span>Table</span><b>Table ${order.table<10?'0'+order.table:order.table}</b></div>
+                    <div class="dr"><span>Payment</span><b>${order.payment}</b></div>
+                    <div class="dr"><span>Items</span><b>${items.reduce((s,i)=>s+i.qty,0)}</b></div>
+                    <div class="dr"><span>Total</span><b>₹${total}</b></div>
+                    <div class="dr"><span>Order Time</span><b>${time} · ${date}</b></div>
+                  </div>
+                  <button class="btn btn-primary" id="doneBtn" style="width:100%;justify-content:center;">Done</button>
+                </div>`;
+            document.getElementById('doneBtn').addEventListener('click', () => {
+                cart = {};
+                updateCartCount();
+                renderMenu();
+                closeModal();
+                order = { name: '', mobile: '', table: null, payment: null, notes: '' };
+                showToast('Order confirmed! Thank you.');
+            });
+        }
+
+        /* ============================================================
+           TOAST
+           ============================================================ */
+        let toastTimer;
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+        }
+
+        /* ============================================================
+           CONTACT FORM
+           ============================================================ */
+        document.getElementById('sendMsgBtn').addEventListener('click', function() {
+            const name = document.getElementById('contactName').value.trim();
+            const phone = document.getElementById('contactPhone').value.trim();
+            const email = document.getElementById('contactEmail').value.trim();
+            const msg = document.getElementById('contactMsg').value.trim();
+            if (!name || !phone || !msg) { showToast('Please fill in name, phone and message.'); return; }
+            const contactData = { name, phone, email, message: msg, submittedAt: new Date().toISOString() };
+            console.log('📨 Contact Form Data:', contactData);
+            document.querySelector('.contact-form .field, .contact-form .btn').forEach(el => el.style.display = 'none');
+            document.getElementById('contactSuccess').classList.add('show');
+            showToast('Message sent — we\'ll be in touch soon!');
+        });
+
+        /* ============================================================
+           INSTAGRAM FOOTER
+           ============================================================ */
+        document.getElementById('footInsta').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.open(CONFIG.instagramUrl, '_blank');
+        });
+
+        /* ============================================================
+           OPENING HOURS
+           ============================================================ */
+        document.getElementById('hrsWeek').textContent = CONFIG.hours.week;
+        document.getElementById('hrsWeekend').textContent = CONFIG.hours.weekend;
+
+        /* ============================================================
+           INIT
+           ============================================================ */
+        renderMenu();
+        updateCartCount();
+    </script>
+</body>
+</html>
