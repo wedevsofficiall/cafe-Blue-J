@@ -195,7 +195,7 @@
             align-items: center;
             gap: 10px;
             font-family: var(--serif);
-            font-size: 22px;
+            font-size: 24px; /* increased from 22px */
             color: var(--off-white);
             transition: color .5s var(--ease);
             flex-shrink: 0;
@@ -204,24 +204,24 @@
             color: var(--teal-deep);
         }
         .nav-logo img {
-            height: 36px;
+            height: 48px; /* increased from 36px */
             width: auto;
             flex-shrink: 0;
             display: block;
             transition: height .4s var(--ease);
         }
         #navbar.scrolled .nav-logo img {
-            height: 30px;
+            height: 40px; /* increased from 30px */
         }
         .nav-logo .logo-text {
             display: flex;
             align-items: baseline;
             gap: 2px;
-            font-size: 22px;
+            font-size: 24px; /* increased from 22px */
             transition: font-size .4s var(--ease);
         }
         #navbar.scrolled .nav-logo .logo-text {
-            font-size: 20px;
+            font-size: 20px; /* kept as before */
         }
         .nav-logo .logo-text .blue {
             font-weight: 450;
@@ -548,7 +548,6 @@
             line-height: 1.6;
             margin-bottom: 16px;
         }
-        /* Fix for offer "Order Now" buttons — now scroll to menu */
         button.offer-link {
             background: none;
             border: none;
@@ -1488,15 +1487,18 @@
             align-items: center;
             gap: 10px;
             font-family: var(--serif);
-            font-size: 24px;
+            font-size: 24px; /* increased from original */
             color: var(--off-white);
             margin-bottom: 16px;
         }
         .footer-logo img {
-            height: 36px;
+            height: 48px; /* increased from 36px */
             width: auto;
             flex-shrink: 0;
             display: block;
+        }
+        .footer-logo .logo-text {
+            font-size: 24px; /* increased to match */
         }
         .footer-logo .logo-text .blue {
             color: var(--peach);
@@ -2046,16 +2048,16 @@
 
             /* Logo responsive - tablet */
             .nav-logo img {
-                height: 30px;
+                height: 40px; /* increased from 30px */
             }
             #navbar.scrolled .nav-logo img {
-                height: 26px;
+                height: 34px; /* increased from 26px */
             }
             .nav-logo .logo-text {
-                font-size: 19px;
+                font-size: 20px; /* increased from 19px */
             }
             #navbar.scrolled .nav-logo .logo-text {
-                font-size: 17px;
+                font-size: 18px; /* increased from 17px */
             }
             .nav-logo {
                 gap: 8px;
@@ -2063,6 +2065,12 @@
             .nav-right .btn {
                 padding: 9px 16px;
                 font-size: 11px;
+            }
+            .footer-logo img {
+                height: 40px; /* increased */
+            }
+            .footer-logo .logo-text {
+                font-size: 20px;
             }
 
             /* Slider responsive */
@@ -2154,16 +2162,16 @@
 
             /* Logo responsive - mobile */
             .nav-logo img {
-                height: 26px;
+                height: 34px; /* increased from 26px */
             }
             #navbar.scrolled .nav-logo img {
-                height: 22px;
+                height: 28px; /* increased from 22px */
             }
             .nav-logo .logo-text {
-                font-size: 17px;
+                font-size: 18px; /* increased from 17px */
             }
             #navbar.scrolled .nav-logo .logo-text {
-                font-size: 15px;
+                font-size: 16px; /* increased from 15px */
             }
             .nav-logo {
                 gap: 6px;
@@ -2194,28 +2202,28 @@
 
             /* Footer logo responsive */
             .footer-logo img {
-                height: 30px;
+                height: 34px; /* increased */
             }
             .footer-logo {
-                font-size: 20px;
+                font-size: 18px;
             }
             .footer-logo .logo-text {
-                font-size: 20px;
+                font-size: 18px;
             }
         }
 
         @media(max-width:400px) {
             .nav-logo img {
-                height: 22px;
+                height: 28px; /* increased from 22px */
             }
             #navbar.scrolled .nav-logo img {
-                height: 18px;
+                height: 24px; /* increased from 18px */
             }
             .nav-logo .logo-text {
-                font-size: 14px;
+                font-size: 16px; /* increased from 14px */
             }
             #navbar.scrolled .nav-logo .logo-text {
-                font-size: 13px;
+                font-size: 14px; /* increased from 13px */
             }
             .nav-logo {
                 gap: 5px;
@@ -2225,13 +2233,13 @@
                 font-size: 9px;
             }
             .footer-logo img {
-                height: 26px;
+                height: 28px; /* increased */
             }
             .footer-logo {
-                font-size: 17px;
+                font-size: 16px;
             }
             .footer-logo .logo-text {
-                font-size: 17px;
+                font-size: 16px;
             }
             .slide-content h3 {
                 font-size: 22px !important;
@@ -2269,10 +2277,10 @@
 
         @media(max-width:360px) {
             .nav-logo .logo-text {
-                font-size: 13px;
+                font-size: 14px; /* increased from 13px */
             }
             .nav-logo img {
-                height: 20px;
+                height: 24px; /* increased from 20px */
             }
             .nav-right .btn {
                 padding: 4px 8px;
@@ -2284,6 +2292,12 @@
             }
             .nav-right {
                 gap: 10px;
+            }
+            .footer-logo img {
+                height: 24px;
+            }
+            .footer-logo .logo-text {
+                font-size: 14px;
             }
         }
     </style>
@@ -2432,7 +2446,7 @@
     <section class="section" id="about">
         <div class="container about-grid">
             <div class="about-img reveal-left">
-                <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=600&auto=format&fit=crop" alt="Cafe Blue J interior" loading="lazy" onload="this.classList.add('loaded')">
+                <img src="unnamed.webp" alt="Cafe Blue J interior" loading="lazy" onload="this.classList.add('loaded')">
                 <div class="about-badge"><b>Est.</b><span>Mahim, Mumbai</span></div>
             </div>
             <div class="about-content reveal-right">
@@ -3022,10 +3036,25 @@
             grid.innerHTML = '';
             let any = false;
             MENU.forEach(section => {
+                // For each category, show only first 3 items (or less if search filters)
+                let itemsToShow = section.items;
+                // If search term, filter first
+                if (searchTerm) {
+                    itemsToShow = itemsToShow.filter(it =>
+                        it.n.toLowerCase().includes(searchTerm) || it.d.toLowerCase().includes(searchTerm)
+                    );
+                }
+                // If category filter is active and not 'All', we still show only 3 items of that category
+                // (but we already filtered by category via the outer condition)
+                // Take only first 3 items
+                itemsToShow = itemsToShow.slice(0, 3);
+
+                if (itemsToShow.length === 0) return; // skip if no items after filtering
+
+                // Check if current category filter matches
                 if (currentCat !== 'All' && section.cat !== currentCat) return;
-                section.items.forEach(it => {
-                    if (searchTerm && !it.n.toLowerCase().includes(searchTerm) && !it.d.toLowerCase()
-                        .includes(searchTerm)) return;
+
+                itemsToShow.forEach(it => {
                     any = true;
                     const key = itemKey(section.cat, it.n);
                     const qty = cart[key] ? cart[key].qty : 0;
